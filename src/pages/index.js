@@ -19,26 +19,26 @@ export default function Index() {
       <header className="relative pb-20">
         <Image src={bgImage} alt="background" layout="fill" objectFit="cover" priority />
         <Navbar />
-        <div className="relative container flex justify-center mx-auto">
-          <div className=" flex  flex-col lg:flex-row z-10 mt-8 w-full">
-            <div className="flex-1 max-w-[32.5rem]">
-              <h1 className="font-display font-extrabold text-white text-[4.5rem] leading-[4.813rem]">
+        <div className="relative lg:container px-4 flex justify-center mx-auto">
+          <div className="flex flex-col md:flex-row mt-[12rem] w-full">
+            <div className="flex-1 px-3 md:px-0 lg:max-w-[32.5rem]">
+              <h1 className="font-display font-extrabold text-white text-[2.5rem] sm:text-[3rem] lg:text-[4.5rem] leading-[2.7rem] md:leading-[3.7rem] lg:leading-[4.813rem]">
                 Thinking and Planing for the future
               </h1>
-              <p className="font-display mb-4 text-[1.125rem] pr-10 leading-[1.125rem] text-white font-medium">
+              <p className="font-display mb-4 text-[1.125rem] sm:pt-3 pr-10 leading-[1.125rem] text-white font-medium">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore.
               </p>
               <div>
-                <button className="font-display text-[1.125rem] border-none focus:outline-none outline-none hover:bg-blue-700  p-[0.875rem] bg-primary text-white mr-3">
+                <button className="font-display text-[1rem] md:text-[1.125rem] border-none focus:outline-none outline-none hover:bg-blue-700  p-[0.875rem] bg-primary text-white mr-3">
                   Discover more
                 </button>
-                <button className="font-display text-[1.125rem] border-white border-2 focus:outline-none outline-none text-white px-[0.875rem] hover:bg-white hover:text-black py-3">
+                <button className="font-display text-[1rem] md:text-[1.125rem] border-white border-2 focus:outline-none outline-none text-white px-[0.875rem] hover:bg-white hover:text-black py-3">
                   Get Started
                 </button>
               </div>
             </div>
-            <div className="flex-1 flex-col justify-center items-center hidden lg:flex">
+            <div className="flex-1 flex-col justify-center items-center hidden md:flex">
               <button className="border-none focus:outline-none outline-none rounded-full bg-white text-black w-[4.75rem] h-[4.75rem] flex justify-center items-center mb-4">
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path

@@ -38,8 +38,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-slate-500 mb-3 bg">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+      <nav className="fixed flex flex-wrap items-center justify-center px-2 py-3 bg-slate-500 mb-3 w-full z-10">
+        <div className="lg:container px-4 mx-auto flex flex-wrap items-center justify-between w-full">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link href="/">
               <a className="inline-block mr-4 py-2 whitespace-nowrap">
@@ -82,7 +82,7 @@ export default function Navbar() {
           <m.div
             animate={navbarOpen ? 'visible' : 'hidden'}
             variants={variant}
-            className={'lg:flex flex-grow items-center flex lg:!h-auto'}
+            className={'lg:flex flex-grow items-center flex lg:!h-auto bg-black lg:bg-transparent'}
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
@@ -91,11 +91,27 @@ export default function Navbar() {
                   <Link href={url}>
                     <a className="px-3 py-2 flex items-center text-xs leading-snug text-white hover:opacity-75">
                       {/* <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i> */}
-                      <span className={`ml-2 ${router.pathname === url ? 'text-primary' : ''}`}>{title}</span>
+                      <span
+                        className={`ml-2 text-[1.125rem] hover:text-blue-400 ${
+                          router.pathname === url ? 'text-primary' : ''
+                        }`}
+                      >
+                        {title}
+                      </span>
                     </a>
                   </Link>
                 </li>
               ))}
+
+              <li className="nav-item">
+                <Link href={'/login'}>
+                  <a className="px-3 py-2 flex items-center text-xs leading-snug text-white hover:opacity-75">
+                    <button className="font-display text-[1rem] border-none focus:outline-none outline-none hover:bg-blue-700  p-[0.875rem] bg-primary text-white mr-3">
+                      Discover more
+                    </button>
+                  </a>
+                </Link>
+              </li>
             </ul>
           </m.div>
         </div>
