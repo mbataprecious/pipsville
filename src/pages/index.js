@@ -1,6 +1,7 @@
 // import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '../components/landing-page-components/Navbar';
+import BoxButton from '../components/landing-page-components/BoxButton';
 import Image from 'next/image';
 import bgImage from '../assets/img/bg-drop.png';
 // ----------------------------------------------------------------------
@@ -16,43 +17,57 @@ export default function Index() {
 
   return (
     <>
-      <header className="relative pb-20">
-        <Image src={bgImage} alt="background" layout="fill" objectFit="cover" priority />
-        <Navbar />
-        <div className="relative lg:container px-4 flex justify-center mx-auto">
-          <div className="flex flex-col md:flex-row mt-[12rem] w-full">
-            <div className="flex-1 px-3 md:px-0 lg:max-w-[32.5rem]">
-              <h1 className="font-display font-extrabold text-white text-[2.5rem] sm:text-[3rem] lg:text-[4.5rem] leading-[2.7rem] md:leading-[3.7rem] lg:leading-[4.813rem]">
-                Thinking and Planing for the future
-              </h1>
-              <p className="font-display mb-4 text-[1.125rem] sm:pt-3 pr-10 leading-[1.125rem] text-white font-medium">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore.
-              </p>
-              <div>
-                <button className="font-display text-[1rem] md:text-[1.125rem] border-none focus:outline-none outline-none hover:bg-blue-700  p-[0.875rem] bg-primary text-white mr-3">
-                  Discover more
-                </button>
-                <button className="font-display text-[1rem] md:text-[1.125rem] border-white border-2 focus:outline-none outline-none text-white px-[0.875rem] hover:bg-white hover:text-black py-3">
-                  Get Started
-                </button>
+      <header>
+        <div className="relative pb-20">
+          <Image src={bgImage} alt="background" layout="fill" objectFit="cover" priority />
+          <Navbar />
+          <div className="relative lg:container px-4 flex justify-center mx-auto">
+            <div className="flex flex-col md:flex-row mt-[12rem] w-full">
+              <div className="flex-1 px-3 md:px-0 lg:max-w-[32.5rem]">
+                <h1 className="font-display font-extrabold text-white text-[2.5rem] sm:text-[3rem] lg:text-[4.5rem] leading-[2.7rem] md:leading-[3.7rem] lg:leading-[4.813rem]">
+                  Thinking and Planing for the future
+                </h1>
+                <p className="font-display mb-4 text-[1.125rem] sm:pt-3 pr-10 leading-[1.125rem] text-white font-medium">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore.
+                </p>
+                <div>
+                  <BoxButton className="hover:bg-blue-700 bg-primary text-white mr-3">Discover more</BoxButton>
+                  <BoxButton variant="outline" className="text-white hover:bg-white hover:text-black py-3">
+                    Get Started
+                  </BoxButton>
+                </div>
               </div>
-            </div>
-            <div className="flex-1 flex-col justify-center items-center hidden md:flex">
-              <button className="border-none focus:outline-none outline-none rounded-full bg-white text-black w-[4.75rem] h-[4.75rem] flex justify-center items-center mb-4">
-                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M15.75 12.0219V23.8629L22.9815 17.9964L15.75 12.0219ZM15.684 27.0009C15.2235 27.0009 14.7585 26.9019 14.325 26.6979C13.353 26.2404 12.75 25.3284 12.75 24.3189V11.6799C12.75 10.6719 13.353 9.75989 14.325 9.30239C15.423 8.78489 16.725 8.93489 17.6385 9.68939L25.287 16.0104C25.9005 16.5144 26.25 17.2404 26.25 17.9994C26.25 18.7584 25.9005 19.4859 25.287 19.9899L17.6385 26.3079C17.0865 26.7654 16.3905 27.0009 15.684 27.0009V27.0009Z"
-                    fill="black"
-                  />
-                </svg>
-              </button>
-              <p className="uppercase font-display font-medium text-white tracking-[0.125rem]">play video</p>
+              <div className="flex-1 flex-col justify-center items-center hidden md:flex">
+                <button className="border-none focus:outline-none outline-none rounded-full bg-white text-black w-[4.75rem] h-[4.75rem] flex justify-center items-center mb-4">
+                  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M15.75 12.0219V23.8629L22.9815 17.9964L15.75 12.0219ZM15.684 27.0009C15.2235 27.0009 14.7585 26.9019 14.325 26.6979C13.353 26.2404 12.75 25.3284 12.75 24.3189V11.6799C12.75 10.6719 13.353 9.75989 14.325 9.30239C15.423 8.78489 16.725 8.93489 17.6385 9.68939L25.287 16.0104C25.9005 16.5144 26.25 17.2404 26.25 17.9994C26.25 18.7584 25.9005 19.4859 25.287 19.9899L17.6385 26.3079C17.0865 26.7654 16.3905 27.0009 15.684 27.0009V27.0009Z"
+                      fill="black"
+                    />
+                  </svg>
+                </button>
+                <p className="uppercase font-display font-medium text-white tracking-[0.125rem]">play video</p>
+              </div>
             </div>
           </div>
         </div>
+
+        <section>
+          <div className="lg:container flex">
+            <div>
+              <div style={{ mask: `url(/icons/layers.svg) no-repeat center / contain` }}>i</div>
+              <div>
+                <h6 className="">Save Money</h6>
+                <p className="text-[#4F4F4F]">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </header>
     </>
   );
