@@ -81,11 +81,12 @@ export default function Navbar() {
           </div>
           <m.div
             animate={navbarOpen ? 'visible' : 'hidden'}
+            initial={variant.hidden}
             variants={variant}
             className={'lg:flex flex-grow items-center flex lg:!h-auto bg-black lg:bg-transparent'}
             id="example-navbar-danger"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center">
               {linkArray.map(({ title, url }) => (
                 <li className="nav-item" key={title}>
                   <Link href={url}>
@@ -105,7 +106,7 @@ export default function Navbar() {
 
               <li className="nav-item">
                 <Link href={'/login'}>
-                  <a className="px-3 py-2 flex items-center text-xs leading-snug text-white hover:opacity-75">
+                  <a className="px-3 py-2 flex items-center text-xs leading-snug text-white">
                     <button className="font-display text-[1rem] border-none focus:outline-none outline-none hover:bg-blue-700  p-[0.875rem] bg-primary text-white mr-3">
                       Discover more
                     </button>
