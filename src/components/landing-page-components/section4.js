@@ -9,7 +9,7 @@ function section4() {
         <div className="flex-1 md:w-[5.125rem] flex flex-col items-center md:items-start text-center px-5 md:text-left py-6">
           <h6 className="text-primary text-xs mb-6">ABOUT US</h6>
           <h5 className="">Financial Freedom without Boundaries</h5>
-          <hr className="bg-primary h-1 my-4 " />
+          <hr className="bg-primary h-1 my-4 w-[82px] " />
           <p className="text-[#4F4F4F]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua. Mi tempus imperdiet nulla malesuada pellentesque. In est ante in nibh. Blandit volutpat

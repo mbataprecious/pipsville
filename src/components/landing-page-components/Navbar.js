@@ -86,7 +86,7 @@ export default function Navbar() {
             className={'lg:flex flex-grow items-center flex lg:!h-auto bg-black lg:bg-transparent'}
             id="example-navbar-danger"
           >
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center">
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center w-full md:justify-end">
               {linkArray.map(({ title, url }) => (
                 <li className="nav-item" key={title}>
                   <Link href={url}>
