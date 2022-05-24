@@ -38,7 +38,8 @@ const createUser = async (req, res) => {
     const hash = await bcrypt.hash(userData.password, config.saltRounds);
     userData.password = hash;
     //save user
-
+    const user = new User(userData);
+    await user.save();
     //create verification token
     const token = await jwtSign({ user: userData }, config.jwtSecret, { expiresIn: 60 * 2 });
     let hostname = req.headers.host;
