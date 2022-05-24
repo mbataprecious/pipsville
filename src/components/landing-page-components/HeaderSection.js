@@ -70,7 +70,7 @@ export default function HeaderSection() {
                     className={'w-[4rem] h-[4rem]'}
                   ></div> */}
                   <div className={'w-[5.188rem] h-[5.188rem] p-2'}>
-                    <img src="./icons/layers.svg" className={'w-full block'} />
+                    <img src="./icons/layers.svg" className={'w-full block'} alt="icon" />
                   </div>
                 </div>
                 <div className="px-3">

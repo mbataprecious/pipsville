@@ -2,25 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { m } from 'framer-motion';
-
-const linkArray = [
-  {
-    title: 'About Us',
-    url: '/about',
-  },
-  {
-    title: 'Contat Us',
-    url: '/contact',
-  },
-  {
-    title: 'FAQs',
-    url: '/faq',
-  },
-  {
-    title: 'Investment',
-    url: '/services',
-  },
-];
+import { linkArray } from './landingUtils';
 
 const variant = {
   hidden: {

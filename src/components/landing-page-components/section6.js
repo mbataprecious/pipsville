@@ -1,59 +1,42 @@
 import React from 'react';
 
-import tradeImg from '../../assets/img/bg6.png';
+import tradebg from '../../assets/img/bg6.png';
+import tradeImg from '../../assets/img/trade view.png';
 import Image from 'next/image';
-import Script from 'next/script';
 
 function Section6() {
   return (
-    <div className="relative mt-6 pb-20">
-      <Image src={tradeImg} alt="background" layout="fill" objectFit="cover" priority />
-      <div className="relative flex flex-col items-center lg:container px-4 mx-auto">
-        <h5 className="text-[#fff] text-center w-[42rem]">
+    <div className="relative px-5 pb-10">
+      <Image src={tradebg} alt="background" layout="fill" objectFit="cover" priority />
+      <div className="relative flex flex-col items-center lg:container py-4 px-4 lg:px-0 mx-auto">
+        <h5 className="text-[#0F1642] text-center md:w-[42rem]">
           Save time.<span className="text-[#EA5455]">Get higher return.</span>
           Multiply wealth.
         </h5>
-        <div className="flex flex-col md:flex-row md:justify-between mt-[12rem] p-10 md:p-14 w-full">
+        <div className="flex flex-col items-center lg:flex-row lg:justify-between mt-[5ssrem] p-5 md:p-14 w-full">
+          <div className="w-[80%] lg:w-[60%]">
+            <Image src={tradeImg} alt="trade" />
+          </div>
           <div className="flex-1">
-            <div className="relative">
-              <div className="bg-[#1081E8] rotate-3 absolute rounded-lg"> </div>
-              <div className="rounded-lg">
-                <div className="tradingview-widget-container">
-                  <div className="tradingview-widget-container__widget"> </div>
-                  <div className="tradingview-widget-copyright">
-                    <a
-                      href="https://www.tradingview.com/markets/cryptocurrencies/prices-all/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <span className="blue-text">Cryptocurrency Markets</span>
-                    </a>{' '}
-                    by TradingView
+            <div className="md:w-[386px]">
+              {[{ color: 'FF9F43' }, { color: '8C64D2' }, { color: 'EA5455' }].map((x) => (
+                <div key={x.color} className="flex mb-4">
+                  <div className="pt-5">
+                    <div style={{ background: `#${x.color}` }} className={`rounded-full w-[20px] h-[20px]`}>
+                      {' '}
+                    </div>
                   </div>
-                  <Script
-                    id="s"
-                    src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js"
-                    strategy="afterInteractive"
-                    dangerouslySetInnerHTML={{
-                      __html: `
-  {
-  "width": "100%",
-  "height": "100%",
-  "defaultColumn": "overview",
-  "screener_type": "crypto_mkt",
-  "displayCurrency": "USD",
-  "colorTheme": "light",
-  "locale": "en",
-  "isTransparent": true
-}
-  `,
-                    }}
-                  />
+                  <div className="pl-3">
+                    <h6 className="text-[#0F2851]">Professional Traders.</h6>
+                    <p className="text-[#817676]">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua.
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-          <div className="flex-1"> </div>
         </div>
       </div>
     </div>
