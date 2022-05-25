@@ -13,7 +13,6 @@ import Layout from '../layouts';
 
 // sections
 import { LoginForm } from '../sections/auth/login';
-// import AuthSocial from '../sections/auth/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -58,6 +57,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
+const SpanStyle = styled('span')(({ theme }) => ({
+  color: theme.palette.primary.main,
+}));
+const LoginImg = styled('img')(({ theme }) => ({
+  width: '100%',
+}));
+
 // ----------------------------------------------------------------------
 Login.getLayout = function getLayout(page) {
   return <Layout variant="logoOnly">{page}</Layout>;
@@ -89,17 +95,14 @@ export default function Login() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
-            </Typography>
-            <img src="/static/illustrations/illustration_login.png" alt="login" />
+            <LoginImg src="/img/loginIllustration.svg" />
           </SectionStyle>
         )}
 
-        <Container maxWidth="sm">
+        <Container maxWidth="lg">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to Pipsville
+              Sign in to <SpanStyle>Pipsville</SpanStyle>
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 10 }}>Enter your details below.</Typography>

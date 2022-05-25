@@ -44,7 +44,6 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: 464,
   display: 'flex',
-  background: theme.palette.primary.main,
   flexDirection: 'column',
   justifyContent: 'center',
   margin: theme.spacing(2, 0, 2, 2),
@@ -62,6 +61,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 const SpanStyle = styled('span')(({ theme }) => ({
   color: theme.palette.primary.main,
+}));
+const LoginImg = styled('img')(({ theme }) => ({
+  width: '100%',
 }));
 
 // ----------------------------------------------------------------------
@@ -95,10 +97,7 @@ export default function Login() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5, color: '#ffffff' }}>
-              Hi, Welcome Back
-            </Typography>
-            <SvgIconStyle src="/img/loginIllustration.svg" />
+            <LoginImg src="/img/loginIllustration.svg" />
           </SectionStyle>
         )}
 

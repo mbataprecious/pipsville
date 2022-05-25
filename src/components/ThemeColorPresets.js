@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 // @mui
 import { alpha, ThemeProvider, createTheme, useTheme } from '@mui/material/styles';
 // hooks
-import useSettings from '../hooks/useSettings';
 //
 import componentsOverride from '../theme/overrides';
 
@@ -15,21 +14,16 @@ ThemeColorPresets.propTypes = {
 
 export default function ThemeColorPresets({ children }) {
   const defaultTheme = useTheme();
-  const { setColor } = useSettings();
 
   const themeOptions = useMemo(
     () => ({
       ...defaultTheme,
-      palette: {
-        ...defaultTheme.palette,
-        primary: setColor,
-      },
       customShadows: {
         ...defaultTheme.customShadows,
-        primary: `0 8px 16px 0 ${alpha(setColor.main, 0.24)}`,
+        primary: `0 8px 16px 0 ${alpha(defaultTheme.palette.primary.main, 0.24)}`,
       },
     }),
-    [setColor, defaultTheme]
+    [defaultTheme]
   );
 
   const theme = createTheme(themeOptions);
