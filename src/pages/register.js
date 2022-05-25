@@ -13,7 +13,6 @@ import Layout from '../layouts';
 
 // sections
 import { LoginForm } from '../sections/auth/login';
-import SvgIconStyle from '../components/SvgIconStyle';
 // import AuthSocial from '../sections/auth/AuthSocial';
 
 // ----------------------------------------------------------------------
@@ -44,7 +43,6 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: 464,
   display: 'flex',
-  background: theme.palette.primary.main,
   flexDirection: 'column',
   justifyContent: 'center',
   margin: theme.spacing(2, 0, 2, 2),
@@ -58,10 +56,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   flexDirection: 'column',
   padding: theme.spacing(12, 0),
-}));
-
-const SpanStyle = styled('span')(({ theme }) => ({
-  color: theme.palette.primary.main,
 }));
 
 // ----------------------------------------------------------------------
@@ -95,17 +89,17 @@ export default function Login() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5, color: '#ffffff' }}>
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Hi, Welcome Back
             </Typography>
-            <SvgIconStyle src="/img/loginIllustration.svg" />
+            <img src="/static/illustrations/illustration_login.png" alt="login" />
           </SectionStyle>
         )}
 
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign in to <SpanStyle>Pipsville</SpanStyle>
+              Sign in to Pipsville
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 10 }}>Enter your details below.</Typography>

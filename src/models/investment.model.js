@@ -30,4 +30,4 @@ const InvestmentSchema = new mongoose.Schema(
 
 const Investment = mongoose.model('Investment', InvestmentSchema);
 
-module.exports = Investment;
+export default Investment;

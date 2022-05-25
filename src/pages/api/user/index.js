@@ -9,6 +9,7 @@ import emailTemplate from '../../../helpers/emailTemplate';
 export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
+      getUsers(req, res);
       break;
     case 'POST':
       await createUser(req, res);
@@ -18,6 +19,18 @@ export default async function handler(req, res) {
       return response(res, 400, 'only get and post is allowed on this route', null);
   }
 }
+
+const getUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    response(res, 200, 'fetched users successfully', allUsers);
+  } catch (err) {
+    return res.status(500).json({
+      type: 'failure',
+      message: 'Server Error!',
+    });
+  }
+};
 
 const createUser = async (req, res) => {
   const userData = req.body;
