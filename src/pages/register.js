@@ -1,18 +1,20 @@
+// import { capitalCase } from 'change-case';
+// import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
-import NextLink from 'next/link';
+import { Box, Card, Container, Typography, Link as NormalLink } from '@mui/material';
 // hooks
+// import useAuth from '../../hooks/useAuth';
 import useResponsive from '../hooks/useResponsive';
+// routes
+// import { PATH_AUTH } from '../routes/paths';
 // components
 import Page from '../components/Page';
 import Logo from '../components/Logo';
-
-//layout
-import Layout from '../layouts';
-
+import Image from '../components/Image';
+import Link from 'next/link';
 // sections
-import { LoginForm } from '../sections/auth/login';
+import { RegisterForm } from '../sections/auth/register';
 
 // ----------------------------------------------------------------------
 
@@ -50,75 +52,80 @@ const SectionStyle = styled(Card)(({ theme }) => ({
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 480,
   margin: 'auto',
-  minHeight: '100vh',
   display: 'flex',
-  justifyContent: 'center',
+  minHeight: '100vh',
   flexDirection: 'column',
+  justifyContent: 'center',
   padding: theme.spacing(12, 0),
 }));
 
-const SpanStyle = styled('span')(({ theme }) => ({
-  color: theme.palette.primary.main,
-}));
-const LoginImg = styled('img')(({ theme }) => ({
-  width: '100%',
-}));
-
-// ----------------------------------------------------------------------
-Login.getLayout = function getLayout(page) {
-  return <Layout variant="logoOnly">{page}</Layout>;
-};
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Register() {
+  // const { method } = useAuth();
+
   const smUp = useResponsive('up', 'sm');
-
   const mdUp = useResponsive('up', 'md');
 
   return (
-    <Page title="Login">
+    <Page title="Register">
       <RootStyle>
         <HeaderStyle>
           <Logo />
-
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account? {''}
-              <NextLink href={'/register'}>
-                <Link variant="subtitle2" sx={{ cursor: 'pointer' }}>
-                  Get started
-                </Link>
-              </NextLink>
+              Already have an account?{' '}
+              <Link href={'/login'}>
+                <NormalLink variant="subtitle2">Login</NormalLink>
+              </Link>
             </Typography>
           )}
         </HeaderStyle>
 
         {mdUp && (
           <SectionStyle>
-            <LoginImg src="/img/loginIllustration.svg" />
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+              Create a Free Account with us
+            </Typography>
+            <Image alt="register" src="/img/signupIllustration.svg" />
           </SectionStyle>
         )}
 
-        <Container maxWidth="lg">
+        <Container>
           <ContentStyle>
-            <Typography variant="h4" gutterBottom>
-              Sign in to <SpanStyle>Pipsville</SpanStyle>
+            <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ flexGrow: 1 }}>
+                <Typography variant="h4" gutterBottom>
+                  Get started absolutely free.
+                </Typography>
+                <Typography sx={{ color: 'text.secondary' }}>Free forever. No credit card needed.</Typography>
+              </Box>
+            </Box>
+
+            <RegisterForm />
+
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+              By registering, I agree to Pipsville&nbsp;
+              <Link href="/">
+                <NormalLink underline="always" color="text.primary" href="#">
+                  Terms of Service
+                </NormalLink>
+              </Link>
+              and
+              <Link href="/">
+                <NormalLink underline="always" color="text.primary" href="/">
+                  Privacy Policy
+                </NormalLink>
+              </Link>
+              .
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 10 }}>Enter your details below.</Typography>
-
-            {/* <AuthSocial /> */}
-
-            <LoginForm />
-
             {!smUp && (
-              <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have an account?{' '}
-                <NextLink href="/register">
-                  <Link variant="subtitle2" sx={{ cursor: 'pointer' }}>
-                    Get started
-                  </Link>
-                </NextLink>
+              <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
+                Already have an account?{' '}
+                <Link href="/login">
+                  <a>Login</a>
+                </Link>
               </Typography>
             )}
           </ContentStyle>

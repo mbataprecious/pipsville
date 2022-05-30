@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const TransactionSchema = new mongoose.Schema(
   {
@@ -12,6 +12,9 @@ const TransactionSchema = new mongoose.Schema(
     investmentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Investment',
+    },
+    currentBalance: {
+      type: Number,
     },
     type: {
       type: String,

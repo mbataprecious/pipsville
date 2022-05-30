@@ -97,6 +97,9 @@ export default function Login() {
 
         {mdUp && (
           <SectionStyle>
+            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+              Welcome Back.
+            </Typography>
             <LoginImg src="/img/loginIllustration.svg" />
           </SectionStyle>
         )}
