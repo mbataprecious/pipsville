@@ -9,18 +9,7 @@ import useSettings from '../../hooks/useSettings';
 import Page from '../../components/Page';
 // sections
 import StatusCard from '../../components/StatusCard';
-import {
-  AppWidget,
-  AppWelcome,
-  AppFeatured,
-  AppNewInvoice,
-  AppTopAuthors,
-  AppTopRelated,
-  AppAreaInstalled,
-  AppWidgetSummary,
-  AppCurrentDownload,
-  AppTopInstalledCountries,
-} from '../../sections/@dashboard/app';
+import { AppWelcome, AppAreaInstalled, AppWidgetSummary } from '../../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +37,7 @@ export default function PageOne() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Active Users"
+              title="Total Active Balance"
               percent={2.6}
               total={18765}
               chartColor={theme.palette.primary.main}
@@ -58,7 +47,7 @@ export default function PageOne() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Installed"
+              title="Total Withdrawal"
               percent={0.2}
               total={4876}
               chartColor={theme.palette.chart.blue[0]}
@@ -68,7 +57,7 @@ export default function PageOne() {
 
           <Grid item xs={12} md={4}>
             <AppWidgetSummary
-              title="Total Downloads"
+              title="Total Earnings"
               percent={-0.1}
               total={678}
               chartColor={theme.palette.chart.red[0]}
