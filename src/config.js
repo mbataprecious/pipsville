@@ -39,7 +39,7 @@ export const cookiesKey = {
 export const defaultSettings = {
   themeMode: 'light',
   themeDirection: 'ltr',
-  themeColorPresets: 'purple',
+  themeColorPresets: 'blue',
   themeLayout: 'horizontal',
   themeStretch: false,
 };

@@ -1,39 +1,83 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useFormik, Form, FormikProvider, useFormikContext, useField } from 'formik';
+// import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, MenuItem, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 
+import { CountryRegionData } from 'react-country-region-selector';
+
 // ----------------------------------------------------------------------
 
-export default function RegisterForm() {
-  const navigate = useNavigate();
+// const StateSelection = (props) => {
+//   const {getFieldProps}=props
+//   const {
+//     values: {state},
+//     touched,
+//     errors
+//   } = useFormikContext();
+//   const [field, meta] = useField(props);
+//   return (
+//     <TextField
+//       fullWidth
+//       select
+//       label="State"
+//       {...field}
+//       {...getFieldProps('state')}
+//       error={Boolean(touched.state && errors.state)}
+//       helperText={touched.state && errors.state}
+//     >
+//       {props.country.map((option) => (
+//         <MenuItem key={option[0]} value={option[0]}>
+//           {option[0]}
+//         </MenuItem>
+//       ))}
+//     </TextField>
+//   );
+// };
 
+export default function RegisterForm() {
+  // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [currentCountry, setCurrentCountry] = useState([]);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    country: Yup.string().required('country is required'),
+    state: Yup.string().required('state is required'),
+    password: Yup.string().min(5, 'must have atleast 5 char long').required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required(),
   });
 
   const formik = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
+      country: '',
+      state: '',
       email: '',
+      phone: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      // navigate('/dashboard', { replace: true });
     },
   });
+
+  const handleCountryChange = () => {};
+  const handleSelectClick = (index) => {
+    setCurrentCountry(CountryRegionData[index]);
+  };
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
@@ -58,6 +102,39 @@ export default function RegisterForm() {
               helperText={touched.lastName && errors.lastName}
             />
           </Stack>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+              fullWidth
+              select
+              label="Country"
+              onChange={handleCountryChange}
+              {...getFieldProps('country')}
+              error={Boolean(touched.country && errors.country)}
+              helperText={touched.country && errors.country}
+            >
+              {CountryRegionData.map((option, i) => (
+                <MenuItem key={option[0]} value={option[0]} onClick={() => handleSelectClick(i)}>
+                  {option[0]}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField
+              fullWidth
+              select
+              label="State"
+              {...getFieldProps('state')}
+              error={Boolean(touched.state && errors.state)}
+              helperText={touched.state && errors.state}
+            >
+              {currentCountry[2]?.split('|').map((value) => (
+                <MenuItem key={value.split('~')[0]} value={value.split('~')[0]}>
+                  {value.split('~')[0]}
+                </MenuItem>
+              ))}
+            </TextField>
+            {/* <StateSelection country={currentCountry} name={"state"} /> */}
+          </Stack>
 
           <TextField
             fullWidth
@@ -69,24 +146,45 @@ export default function RegisterForm() {
             helperText={touched.email && errors.email}
           />
 
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
+          {/* passwords section */}
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+              fullWidth
+              autoComplete="current-password"
+              type={showPassword ? 'text' : 'password'}
+              label="Password"
+              {...getFieldProps('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              error={Boolean(touched.password && errors.password)}
+              helperText={touched.password && errors.password}
+            />
+            <TextField
+              fullWidth
+              autoComplete="current-password"
+              type={showPassword ? 'text' : 'password'}
+              label="Confirm Password"
+              {...getFieldProps('confirmPassword')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => setShowConfirmPassword((prev) => !prev)}>
+                      <Iconify icon={showConfirmPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+              helperText={touched.confirmPassword && errors.confirmPassword}
+            />
+          </Stack>
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
             Register

@@ -1,5 +1,8 @@
 // components
 import SvgIconStyle from '../../../components/SvgIconStyle';
+import { FiHome } from 'react-icons/fi';
+import { GiWallet } from 'react-icons/gi';
+import { AiFillSetting } from 'react-icons/ai';
 
 // ----------------------------------------------------------------------
 
@@ -7,9 +10,10 @@ const getIcon = (name) => <SvgIconStyle src={`/icons/${name}.svg`} sx={{ width: 
 
 const ICONS = {
   user: getIcon('ic_user'),
-  ecommerce: getIcon('ic_ecommerce'),
   analytics: getIcon('ic_analytics'),
-  dashboard: getIcon('ic_dashboard'),
+  dashboard: <FiHome />,
+  wallet: <GiWallet />,
+  settings: <AiFillSetting />,
 };
 
 const sidebarConfig = [
@@ -18,9 +22,19 @@ const sidebarConfig = [
   {
     subheader: 'general v3.0.0',
     items: [
-      { title: 'One', path: '/dashboard/one', icon: ICONS.dashboard },
-      { title: 'Two', path: '/dashboard/two', icon: ICONS.ecommerce },
-      { title: 'Three', path: '/dashboard/three', icon: ICONS.analytics },
+      { title: 'Dashboard', path: '/dashboard/home', icon: ICONS.dashboard },
+      {
+        title: 'Investments',
+        path: '/dashboard/invest',
+        children: [
+          { title: 'investment plans', path: '/dashboard/invest/plans' },
+          { title: 'Daily Earnings', path: '/dashboard/invest/interest' },
+          { title: 'Investment', path: '/dashboard/invest/all' },
+        ],
+        icon: ICONS.analytics,
+      },
+      { title: 'Wallet', path: '/dashboard/wallet', icon: ICONS.wallet },
+      { title: 'Settings', path: '/dashboard/profile', icon: ICONS.settings },
     ],
   },
 

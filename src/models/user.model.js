@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema(
     },
     postalCode: {
       type: Number,
+      trim: true,
+    },
+    permanentAddress: {
+      type: String,
       trim: true,
     },
     country: {
@@ -76,6 +80,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    referer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     timestamps: true,
@@ -84,4 +92,4 @@ const UserSchema = new mongoose.Schema(
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User;
+export default User;

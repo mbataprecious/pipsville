@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 const getUsers = async (req, res) => {
   try {
     const allUsers = await User.find({});
-    response(res, 200, 'fetched users successfully', allUsers);
+    return response(res, 200, 'fetched users successfully', allUsers);
   } catch (err) {
     return res.status(500).json({
       type: 'failure',
@@ -38,12 +38,6 @@ const createUser = async (req, res) => {
   const fetchedUser = await User.findOne({ email: userData.email });
   if (fetchedUser) {
     return response(res, 400, 'User with email Already Exist!');
-  }
-  //check if user phone exist
-  const storedUser = await User.findOne({ phone: userData.phone });
-
-  if (storedUser) {
-    return response(res, 400, 'User with phone Already Exist!');
   }
   //delete confirm passeord
   delete userData.confirmPassword;
