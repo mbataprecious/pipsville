@@ -5,6 +5,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { signIn } from 'next-auth/react';
 // component
 import Iconify from '../../../components/Iconify';
 
@@ -25,8 +26,12 @@ export default function LoginForm() {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      // navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      signIn('credentials', { redirect: true, email: values.email, password: values.password })
+        .then(() => {})
+        .catch((err) => {
+          console.log('error occured hile signing in', err);
+        });
     },
   });
 

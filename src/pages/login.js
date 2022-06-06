@@ -2,6 +2,7 @@
 import { styled } from '@mui/material/styles';
 import { Card, Link, Container, Typography } from '@mui/material';
 import NextLink from 'next/link';
+
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -13,7 +14,6 @@ import Layout from '../layouts';
 
 // sections
 import { LoginForm } from '../sections/auth/login';
-import SvgIconStyle from '../components/SvgIconStyle';
 // import AuthSocial from '../sections/auth/AuthSocial';
 
 // ----------------------------------------------------------------------
@@ -62,7 +62,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 const SpanStyle = styled('span')(({ theme }) => ({
   color: theme.palette.primary.main,
 }));
-const LoginImg = styled('img')(({ theme }) => ({
+const LoginImg = styled('img')(() => ({
   width: '100%',
 }));
 

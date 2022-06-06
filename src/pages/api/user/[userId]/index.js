@@ -1,27 +1,27 @@
 import response from '../../../../apiUtil/reponses';
-
+import nc from 'next-connect';
 import User from '../../../../models/user.model';
 
-export default async function handler(req, res) {
-  switch (req.method) {
-    case 'GET':
-      await getUserById(req, res);
-      break;
-    case 'POST':
-      await updateUser(req, res);
-      break;
-    case 'DELETE':
-      await updateUser(req, res);
-      break;
-    default:
-      return response(res, 400, 'only get and post is allowed on this route', null);
-  }
-}
+const handler = nc({
+  onError: (err, req, res) => {
+    console.error(err.stack);
+    res.status(500).end('internal server error');
+  },
+  onNoMatch: (req, res) => {
+    res.status(404).end('route is not found');
+  },
+  attachParams: true,
+})
+  .get(getUserById)
+  .post(updateUser)
+  .delete(deleteUser);
+
+export default handler;
 
 const getUserById = async (req, res) => {
-  const { userId } = req.query;
+  const { userId } = req.params;
   try {
-    const user = await User.findById(userId).select(['-password', '-createdAt', '-updatedAt', '-isVerified']);
+    const user = await User.findById(userId).select(['-password', '-createdAt', '-updatedAt', '-isVerified']).exec();
     if (!user) {
       return response(res, 404, 'User not found', null);
     } else {
@@ -33,7 +33,7 @@ const getUserById = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { userId } = req.query;
+  const { userId } = req.params;
   try {
     let fetchedUser = await User.findOne({ _id: userId });
 
@@ -63,7 +63,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { userId } = req.query;
+  const { userId } = req.params;
   try {
     let fetchedUser = await User.findOne({ _id: userId });
 

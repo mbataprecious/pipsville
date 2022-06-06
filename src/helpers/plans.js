@@ -1,0 +1,46 @@
+const plans = [
+  {
+    id: 1,
+    name: 'starter',
+    interest: 0.5,
+    minimum: 100,
+    maximum: 299,
+  },
+  {
+    id: 2,
+    name: 'bronze',
+    interest: 1,
+    minimum: 300,
+    maximum: 999,
+  },
+  {
+    id: 3,
+    name: 'sliver',
+    interest: 1.5,
+    minimum: 1000,
+    maximum: 11999,
+  },
+  {
+    id: 4,
+    name: 'silver x',
+    interest: 1.8,
+    minimum: 1000,
+    maximum: 11999,
+  },
+  {
+    id: 5,
+    name: 'gold',
+    interest: 2.3,
+    minimum: 12000,
+    maximum: 99999,
+  },
+  {
+    id: 6,
+    name: 'diamond',
+    interest: 2.5,
+    minimum: 100000,
+    maximum: 100000000,
+  },
+];
+
+export default plans;

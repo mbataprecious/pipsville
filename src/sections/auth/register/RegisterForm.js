@@ -41,7 +41,6 @@ import { CountryRegionData } from 'react-country-region-selector';
 
 export default function RegisterForm() {
   // const navigate = useNavigate();
-  console.log('this is country data', CountryRegionData);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [currentCountry, setCurrentCountry] = useState([]);
@@ -52,7 +51,7 @@ export default function RegisterForm() {
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     country: Yup.string().required('country is required'),
     state: Yup.string().required('state is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string().min(5, 'must have atleast 5 char long').required('Password is required'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required(),
@@ -128,7 +127,6 @@ export default function RegisterForm() {
               error={Boolean(touched.state && errors.state)}
               helperText={touched.state && errors.state}
             >
-              {console.log(currentCountry)}
               {currentCountry[2]?.split('|').map((value) => (
                 <MenuItem key={value.split('~')[0]} value={value.split('~')[0]}>
                   {value.split('~')[0]}

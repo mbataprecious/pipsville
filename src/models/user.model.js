@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -31,6 +31,10 @@ const UserSchema = new mongoose.Schema(
     },
     postalCode: {
       type: Number,
+      trim: true,
+    },
+    permanentAddress: {
+      type: String,
       trim: true,
     },
     country: {

@@ -2,9 +2,13 @@ import mongoose from 'mongoose';
 
 const InvestmentSchema = new mongoose.Schema(
   {
-    plan: {
+    planId: {
       type: Number,
       required: 'plan is required',
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     capital: {
       type: Number,
@@ -21,6 +25,10 @@ const InvestmentSchema = new mongoose.Schema(
       type: String,
       enum: ['pending', 'active', 'ended'],
       default: 'pending',
+    },
+    daysCount: {
+      type: Number,
+      default: 0,
     },
   },
   {

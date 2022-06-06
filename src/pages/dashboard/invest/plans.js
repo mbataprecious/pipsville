@@ -6,6 +6,7 @@ import useSettings from '../../../hooks/useSettings';
 // components
 import Page from '../../../components/Page';
 import PlanCards from '../../../components/PlanCards';
+import plans from '../../../helpers/plans';
 
 // ----------------------------------------------------------------------
 
@@ -22,9 +23,11 @@ export default function PageFive() {
     <Page title="All Plans">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={2} md={3}>
-            <PlanCards />
-          </Grid>
+          {plans.map((plan) => (
+            <Grid key={plan.id} item xs={12} sm={6} md={4}>
+              <PlanCards plan={plan} />
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </Page>
