@@ -20,6 +20,6 @@ const PlanSchema = new mongoose.Schema(
   }
 );
 
-const Plan = mongoose.model('Plan', PlanSchema);
+const Plan = mongoose.models.Plan || mongoose.model('Plan', PlanSchema);
 
 export default Plan;

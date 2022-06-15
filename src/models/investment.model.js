@@ -30,12 +30,20 @@ const InvestmentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    currency: {
+      type: String,
+      required: 'currency type needed',
+    },
+    transactionId: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const Investment = mongoose.model('Investment', InvestmentSchema);
+const Investment = mongoose.models.Investment || mongoose.model('Investment', InvestmentSchema);
 
 export default Investment;

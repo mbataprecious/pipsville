@@ -15,6 +15,8 @@ import Head from 'next/head';
 import App from 'next/app';
 // utils
 import { getSettings } from '../utils/settings';
+//react-toastify
+import { ToastContainer } from 'react-toastify';
 // contexts
 import { SettingsProvider } from '../contexts/SettingsContext';
 import { CollapseDrawerProvider } from '../contexts/CollapseDrawerContext';
@@ -54,6 +56,17 @@ export default function MyApp(props) {
                 <RtlLayout>
                   <ProgressBar />
                   {getLayout(<Component {...pageProps} />)}
+                  <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
                 </RtlLayout>
               </ThemeColorPresets>
             </MotionLazyContainer>

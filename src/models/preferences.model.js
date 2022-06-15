@@ -16,6 +16,6 @@ const PreferenceSchema = new mongoose.Schema(
   }
 );
 
-const Preference = mongoose.model('Preference', PreferenceSchema);
+const Preference = mongoose.models.Preference || mongoose.model('Preference', PreferenceSchema);
 
 module.exports = Preference;

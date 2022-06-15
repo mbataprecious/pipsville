@@ -5,7 +5,7 @@ console.log('this are the details ', config.password, config.email);
 let transporter = nodemailer.createTransport({
   host: config.mailServer, //replace with your email provider
   port: config.smtpPort,
-  secure: true,
+  // secure: true,
   auth: {
     user: config.email,
     pass: config.password,

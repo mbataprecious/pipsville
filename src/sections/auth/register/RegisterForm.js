@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useFormik, Form, FormikProvider, useFormikContext, useField } from 'formik';
+import axios from 'axios';
+import { useFormik, Form, FormikProvider } from 'formik';
+import { useRouter } from 'next/router';
 // import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, MenuItem, InputAdornment } from '@mui/material';
@@ -40,7 +42,7 @@ import { CountryRegionData } from 'react-country-region-selector';
 // };
 
 export default function RegisterForm() {
-  // const navigate = useNavigate();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [currentCountry, setCurrentCountry] = useState([]);
@@ -64,13 +66,17 @@ export default function RegisterForm() {
       country: '',
       state: '',
       email: '',
-      phone: '',
       password: '',
       confirmPassword: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      // navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      axios
+        .post('/api/user', values)
+        .then(function () {
+          router.push('/dashboard');
+        })
+        .catch(function (error) {});
     },
   });
 

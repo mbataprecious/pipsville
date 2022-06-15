@@ -1,20 +1,20 @@
 import nc from 'next-connect';
-import { getUsers, createUser } from '../../../controllers/user.controller';
+import session from '../../../middleware/ironSession';
 import database from '../../../middleware/database';
-// import session from '../../../middleware/ironSession';
+import { login } from '../../../controllers/auth.controller';
 
 const handler = nc({
   onError: (err, req, res) => {
     console.error(err.stack);
-    res.status(500).end('Something broke!');
+    res.status(500).end('internal server error');
   },
   onNoMatch: (req, res) => {
-    res.status(404).end('Page is not found');
+    res.status(404).end('route is not found');
   },
   attachParams: true,
 })
+  .use(session)
   .use(database)
-  .get(getUsers)
-  .post(createUser);
+  .post(login);
 
 export default handler;

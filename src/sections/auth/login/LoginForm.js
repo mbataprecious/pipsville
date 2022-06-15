@@ -5,15 +5,17 @@ import { useFormik, Form, FormikProvider } from 'formik';
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { signIn } from 'next-auth/react';
 // component
 import Iconify from '../../../components/Iconify';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -26,13 +28,21 @@ export default function LoginForm() {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: (values) => {
-      signIn('credentials', { redirect: true, email: values.email, password: values.password })
-        .then(() => {})
+    onSubmit: ({ remember, ...values }) =>
+      axios
+        .post('/api/auth/login', values)
+        .then(() => {
+          router.push('/dashboard');
+        })
         .catch((err) => {
-          console.log('error occured hile signing in', err);
-        });
-    },
+          // console.log(err.response?.data.message);
+
+          if (err.response) {
+            toast.error('error, pls try again');
+          } else {
+            toast.error(err.message);
+          }
+        }),
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;

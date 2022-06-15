@@ -15,8 +15,6 @@ const UserSchema = new mongoose.Schema(
     phone: {
       type: String,
       trim: true,
-      unique: 'Phone number already exists',
-      required: 'phone number is required',
     },
     city: {
       type: String,
@@ -69,7 +67,7 @@ const UserSchema = new mongoose.Schema(
       default: 'adminPhoto.jpg',
     },
     wallets: {
-      eth: {
+      usdt: {
         type: String,
       },
       btc: {
@@ -90,6 +88,6 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
 export default User;
