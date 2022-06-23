@@ -1,4 +1,4 @@
-import { Container, Typography, Box, Grid } from '@mui/material';
+import { Container, Typography, Grid } from '@mui/material';
 // layouts
 import Layout from '../../layouts';
 // hooks
@@ -6,42 +6,96 @@ import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
 import WalletCards from '../../components/WalletCard';
-import { useState } from 'react';
-import { FaEthereum } from 'react-icons/fa';
-import { FaBitcoin } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import pageAuth from '../../middleware/pageAuthAccess';
+import { getUserById } from '../../helpers/fetchers';
+import PropTypes from 'prop-types';
+import useSWR from 'swr';
+import serializeFields from '../../helpers/serialize';
 // ----------------------------------------------------------------------
 
-PageThree.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
+Wallet.getLayout = function getLayout(page) {
+  return <Layout user={page.props?.user}>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------
+async function handler({ req }) {
+  const user = serializeFields(req.user);
+  console.log('this is user', user);
+  return {
+    props: {
+      user,
+      fallback: {
+        [`/api/user/${user._id}`]: user,
+      },
+    },
+  };
+  // return {
+  //   props: { user },
+  // };
+}
+Wallet.propTypes = {
+  user: PropTypes.object,
+};
+export const getServerSideProps = pageAuth(handler);
 
-export default function PageThree() {
+export default function Wallet({ user }) {
+  const url = `/api/user/${user._id}`;
+  const { data } = useSWR(url, getUserById);
   const { themeStretch } = useSettings();
-  const [loading, isLoading] = useState(false);
-  const [ethError, setEthError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [btcError, setBtcError] = useState(false);
   const [addresses, setAddresses] = useState({
-    eth: '',
+    usdt: '',
     btc: '',
   });
 
-  const validateEthereum = () => {
-    const regex = /^0x[a-fA-F0-9]{40}$/g;
-    if (addresses.eth.match(regex)) {
-      setEthError(false);
+  useEffect(() => {
+    if (data?.wallets) {
+      const { wallets } = data;
+      setAddresses(wallets);
+    }
+  }, [data]);
+
+  const validateBitcoin = () => {
+    const regex = /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/g;
+    if (addresses.btc.match(regex)) {
+      setBtcError(false);
     } else {
-      setEthError(true);
+      setBtcError(true);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAddresses((adrs) => ({
       ...adrs,
       [name]: value,
     }));
+  };
+
+  const updateWallet = () => {
+    if (addresses.btc.trim() === '' || addresses.usdt.trim() === '') {
+      return;
+    }
+    setLoading(true);
+    axios
+      .post(`/api/user/${user._id}/wallet`, addresses)
+      .then((res) => {
+        setLoading(false);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        setLoading(false);
+        if (err.response) {
+          toast.error('error updating user pls login again');
+        } else {
+          toast.error(err.message);
+        }
+      });
   };
   return (
     <Page title="wallet">
@@ -58,51 +112,58 @@ export default function PageThree() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={6}>
             <WalletCards
-              name="eth"
-              error={ethError}
+              name="btc"
+              error={btcError}
               onChange={handleChange}
               price="31,045.00"
-              title="Ethereum(ETH)(24h)"
-              onKeyUp={validateEthereum}
-              value={addresses.eth}
+              title="Bitcoin(ETH)(24h)"
+              onKeyUp={validateBitcoin}
+              value={addresses.btc}
               leadIcon={
-                <FaEthereum
+                <img
                   style={{
                     width: 24,
                     height: 24,
                   }}
+                  src={`/icons/btc.svg`}
+                  alt="coin icon"
                 />
               }
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <WalletCards
-              name="btc"
-              disabled
+              name="usdt"
               onChange={handleChange}
               price=""
-              title="Bitcoin(BTC)(24h) Comming soon"
+              title="Tether(USDT)(24h)"
+              value={addresses.usdt}
               leadIcon={
-                <FaBitcoin
+                <img
                   style={{
                     width: 24,
                     height: 24,
                   }}
+                  src={`/icons/usdt.svg`}
+                  alt="coin icon"
                 />
               }
             />
           </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <LoadingButton size="large" type="submit" variant="contained" loading={loading} onClick={updateWallet}>
+              Update Wallet
+            </LoadingButton>
+          </Grid>
         </Grid>
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
           }}
         >
-          <LoadingButton size="large" sx={{ mt: 3 }} type="submit" variant="contained" loading={loading}>
-            Update Wallet
-          </LoadingButton>
-        </Box>
+
+        </Box> */}
       </Container>
     </Page>
   );

@@ -4,25 +4,27 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 // @mui
 import { Box } from '@mui/material';
-
+import { SWRConfig } from 'swr';
 // ----------------------------------------------------------------------
 
-const Page = forwardRef(({ children, title = '', meta, ...other }, ref) => (
+const Page = forwardRef(({ children, title = '', meta, fallback, ...other }, ref) => (
   <>
     <Head>
-      <title>{`${title} | Minimal-UI`}</title>
+      <title>{`${title} | Pipsville Investment`}</title>
       {meta}
     </Head>
-
-    <Box ref={ref} {...other}>
-      {children}
-    </Box>
+    <SWRConfig value={{ fallback }}>
+      <Box ref={ref} {...other}>
+        {children}
+      </Box>
+    </SWRConfig>
   </>
 ));
 
 Page.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
+  fallback: PropTypes.string,
   meta: PropTypes.node,
 };
 

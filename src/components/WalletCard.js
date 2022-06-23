@@ -14,14 +14,13 @@ WalletCard.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
   title: PropTypes.string,
-  price: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.bool,
   helperText: PropTypes.string,
   leadIcon: PropTypes.node,
 };
 
-function WalletCard({ name, title, price, leadIcon, ...rest }) {
+function WalletCard({ name, title, leadIcon, ...rest }) {
   return (
     <RootStyle>
       <CardContent
@@ -50,11 +49,6 @@ function WalletCard({ name, title, price, leadIcon, ...rest }) {
           </Typography>
         </Box>
 
-        <Box>
-          <Typography marginTop={2} variant="subtitle1">
-            Current Price: USD {price}
-          </Typography>
-        </Box>
         <TextField
           fullWidth
           {...rest}
@@ -62,7 +56,7 @@ function WalletCard({ name, title, price, leadIcon, ...rest }) {
           size="small"
           name={name}
           variant="outlined"
-          label={'Enter wallet address'}
+          placeholder={'Enter wallet address'}
         />
       </CardContent>
     </RootStyle>

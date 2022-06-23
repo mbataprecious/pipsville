@@ -94,11 +94,12 @@ CarouselItem.propTypes = {
     testimony: PropTypes.string,
     position: PropTypes.string,
     name: PropTypes.string,
+    img: PropTypes.string,
   }),
 };
 
 function CarouselItem({ item, ...rest }) {
-  const { title, testimony, position, name } = item;
+  const { title, testimony, position, name, img } = item;
 
   return (
     <div {...rest} className="w-[19rem]">
@@ -107,11 +108,7 @@ function CarouselItem({ item, ...rest }) {
         <p className="text-[#6E6B7B]">{testimony}</p>
       </div>
       <div className="flex flex-col mt-4 items-center">
-        <img
-          src="/img/face.jpg"
-          className="object-center object-cover rounded-full w-[56px] h-[56px]"
-          alt="testimony dp"
-        />
+        <img src={img} className="object-center object-cover rounded-full w-[56px] h-[56px]" alt="testimony dp" />
         <h6 className="text-[1.125rem]">{name}</h6>
         <p>{position}</p>
       </div>

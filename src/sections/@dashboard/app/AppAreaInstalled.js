@@ -9,13 +9,6 @@ import ReactApexChart, { BaseOptionChart } from '../../../components/chart';
 
 const CHART_DATA = [
   {
-    year: 2019,
-    data: [
-      { name: 'Asia', data: [10, 41, 35, 51, 49, 62, 69, 91, 148] },
-      { name: 'America', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
-    ],
-  },
-  {
     year: 2020,
     data: [
       { name: 'Asia', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },

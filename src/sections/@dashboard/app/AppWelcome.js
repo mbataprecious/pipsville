@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { Typography, Button, Card, CardContent } from '@mui/material';
 import { SeoIllustration } from '../../../assets';
+import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ AppWelcome.propTypes = {
 };
 
 export default function AppWelcome({ displayName }) {
+  const router = useRouter();
   return (
     <RootStyle>
       <CardContent
@@ -36,15 +38,17 @@ export default function AppWelcome({ displayName }) {
         }}
       >
         <Typography gutterBottom variant="h4">
-          Welcome back,
+          Welcome ,
           <br /> {!displayName ? '...' : displayName}!
         </Typography>
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
-          {`If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything`}
+          {`Grow your funds using Pipsville platform, invest now qualify for our approval bonus`}
         </Typography>
 
-        <Button variant="contained">Go Now</Button>
+        <Button variant="contained" onClick={() => router.push('/dashboard/invest/plans')}>
+          Invest Now
+        </Button>
       </CardContent>
 
       <SeoIllustration

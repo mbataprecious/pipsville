@@ -1,12 +1,13 @@
 import dbConnect from '../utils/dbConnect';
 
-const database = async (_0, _1, next) => {
+const database = async (req, _1, next) => {
   try {
-    await dbConnect();
+    const conn = await dbConnect();
+    req.db = conn;
+    next();
   } catch (error) {
     console.log('Database connection error ', error.message);
   }
-  next();
 };
 
 export default database;

@@ -15,7 +15,7 @@ import Iconify from '../../../components/Iconify';
 import { IconButtonAnimate } from '../../../components/animate';
 //
 import AccountPopover from './AccountPopover';
-import LanguagePopover from './LanguagePopover';
+// import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
 
 // ----------------------------------------------------------------------
@@ -53,9 +53,10 @@ DashboardHeader.propTypes = {
   isCollapse: PropTypes.bool,
   onOpenSidebar: PropTypes.func,
   verticalLayout: PropTypes.bool,
+  user: PropTypes.object,
 };
 
-export default function DashboardHeader({ onOpenSidebar, isCollapse = false, verticalLayout = false }) {
+export default function DashboardHeader({ onOpenSidebar, isCollapse = false, verticalLayout = false, user }) {
   const isOffset = useOffSetTop(HEADER.DASHBOARD_DESKTOP_HEIGHT) && !verticalLayout;
 
   const isDesktop = useResponsive('up', 'lg');
@@ -79,9 +80,8 @@ export default function DashboardHeader({ onOpenSidebar, isCollapse = false, ver
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <LanguagePopover />
-          <NotificationsPopover />
-          <AccountPopover />
+          {/* <NotificationsPopover /> */}
+          <AccountPopover user={user} />
         </Stack>
       </Toolbar>
     </RootStyle>

@@ -4,8 +4,17 @@ import { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Box, Stack, TextField, Button, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useSWRConfig } from 'swr';
+import PropTypes from 'prop-types';
 
-function ProfileBlock() {
+ProfileBlock.propTypes = {
+  user: PropTypes.object,
+  url: PropTypes.string,
+};
+function ProfileBlock({ user, url }) {
+  const { mutate } = useSWRConfig();
   const [edit, setEdit] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -17,15 +26,28 @@ function ProfileBlock() {
 
   const formik = useFormik({
     initialValues: {
-      firstName: 'shadey',
-      lastName: 'ali',
-      postalCode: '1234',
-      permanentAddress: '',
+      firstName: user.firstName,
+      lastName: user.lastName,
+      postalCode: user.postalCode ? user.postalCode : '',
+      permanentAddress: user.permanentAddress ? user.permanentAddress : '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      // navigate('/dashboard', { replace: true });
-    },
+    onSubmit: (values) =>
+      axios
+        .post(`/api/user/${user._id}`, values)
+        .then((res) => {
+          mutate(url);
+          toast.success(res.data.message);
+        })
+        .catch((err) => {
+          // console.log(err.response?.data.message);
+
+          if (err.response) {
+            toast.error('error, pls try again');
+          } else {
+            toast.error(err.message);
+          }
+        }),
   });
 
   const { errors, touched, handleSubmit, isSubmitting, handleReset, getFieldProps } = formik;

@@ -15,12 +15,16 @@ function Section7() {
               <div className="bg-[#0F1642] p-6 w-full max-w-[34.25rem] inset-0">
                 <h5 className="text-white mb-3">Real Estate and smart homes</h5>
                 <p className="text-[#CFCFCF]">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                  dolore magna aliqua. Mi tempus imperdiet nulla malesuada pellentesque. In est ante in nibh. Blandit
-                  volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque. Blandit volutpat maecenas
-                  volutpat blandit aliquam etiam erat velit scelerisque. Mi tempus imperdiet nulla malesuada
-                  pellentesque. In est ante in nibh. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit
-                  scelerisque. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque.
+                  Our assets drive your returns. We pair our extensive network and expertise with the collective buying
+                  power of our investor community to acquire high-quality assets ranging from debt to equity, commercial
+                  to residential, and more. We follow a "value investing" strategy of acquiring assets for less than
+                  what we believe is their intrinsic value, and typically less than their replacement cost. Our team
+                  then works to increase the value of each asset over time through hands-on management and in
+                  partnership with local operators. We've specifically built the Fundrise portfolio with the intention
+                  of being able to withstand prolonged periods of economic distress. Nothing can be guaranteed, but
+                  because of our conservative approach and extensive underwriting processes, we believe the Fundrise
+                  portfolio is, from a risk-adjusted-return standpoint, well positioned to be able to sustain a severe
+                  economic downturn.
                 </p>
               </div>
             </div>

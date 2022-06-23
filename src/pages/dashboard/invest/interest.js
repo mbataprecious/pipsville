@@ -9,7 +9,7 @@ import Page from '../../../components/Page';
 // ----------------------------------------------------------------------
 
 PageFour.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
+  return <Layout user={page.props?.user}>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------

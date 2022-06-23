@@ -5,6 +5,7 @@ import BoxButton from './BoxButton';
 import Image from 'next/image';
 //import bgImage from '../assets/img/bg-drop.png';
 import bgImage from '../../assets/img/bg-drop.png';
+import { subHead } from './landingUtils';
 // ----------------------------------------------------------------------
 
 export default function HeaderSection() {
@@ -29,18 +30,27 @@ export default function HeaderSection() {
                   Thinking and Planing for the future
                 </h1>
                 <p className="font-display mb-4 text-[1.125rem] sm:pt-3 pr-10 leading-[1.125rem] text-white font-medium">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                  dolore.
+                  Join to us and invest in the Crypto, Forex and Real estate markets with our range of investment plans.
+                  Earn mouth watering bonuses!
                 </p>
                 <div>
-                  <BoxButton className="hover:bg-blue-700 bg-primary text-white mr-3">Discover more</BoxButton>
-                  <BoxButton variant="outline" className="text-white hover:bg-white hover:text-black py-3">
+                  <BoxButton
+                    className="hover:bg-blue-700 bg-primary text-white mr-3"
+                    onClick={() => router.push('/investments')}
+                  >
+                    Discover more
+                  </BoxButton>
+                  <BoxButton
+                    variant="outline"
+                    className="text-white hover:bg-white hover:text-black py-3"
+                    onClick={() => router.push('/register')}
+                  >
                     Get Started
                   </BoxButton>
                 </div>
               </div>
               <div className="flex-1 flex-col justify-center items-center hidden md:flex">
-                <button className="border-none focus:outline-none outline-none rounded-full bg-white text-black w-[4.75rem] h-[4.75rem] flex justify-center items-center mb-4">
+                {/* <button className="border-none focus:outline-none outline-none rounded-full bg-white text-black w-[4.75rem] h-[4.75rem] flex justify-center items-center mb-4">
                   <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       fillRule="evenodd"
@@ -49,7 +59,7 @@ export default function HeaderSection() {
                       fill="black"
                     />
                   </svg>
-                </button>
+                </button> */}
                 <p className="uppercase font-display font-medium text-white tracking-[0.125rem]">play video</p>
               </div>
             </div>
@@ -58,8 +68,8 @@ export default function HeaderSection() {
 
         <section className="lg:container mx-auto">
           <div className="flex flex-col md:flex-row py-6 lg:py-8">
-            {[1, 2, 3].map((x) => (
-              <div key={x} className="flex items-center w-full mb-4 px-5 md:px-0 md:mb-0 lg:w-1/3">
+            {subHead.map(({ title, details, img }) => (
+              <div key={title} className="flex items-center w-full mb-4 px-5 md:px-0 md:mb-0 lg:w-1/3">
                 <div>
                   {' '}
                   {/* <div
@@ -70,14 +80,12 @@ export default function HeaderSection() {
                     className={'w-[4rem] h-[4rem]'}
                   ></div> */}
                   <div className={'w-[5.188rem] h-[5.188rem] p-2'}>
-                    <img src="./icons/layers.svg" className={'w-full block'} alt="icon" />
+                    <img src={img} className={'w-full block'} alt="icon" />
                   </div>
                 </div>
                 <div className="px-3">
-                  <h6 className="pb-2">Save Money</h6>
-                  <p className="text-[#4F4F4F]">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-                  </p>
+                  <h6 className="pb-2">{title}</h6>
+                  <p className="text-[#4F4F4F]">{details}</p>
                 </div>
               </div>
             ))}

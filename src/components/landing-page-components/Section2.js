@@ -3,6 +3,8 @@ import Image from 'next/image';
 import bgImage from '../../assets/img/sec2bg.png';
 import BoxButton from './BoxButton';
 
+//we participates in providing cloud server mining and incorporates Proof of Stake (PoS) using technology, developed by a Group of Experts in the field of IT and Cryptocurrencies
+
 function Section2() {
   return (
     <section>
@@ -14,8 +16,9 @@ function Section2() {
             <div className="flex-1 px-10 pt-18 md:pt-10 md:pr-0 md:pl-44 flex flex-col text-center md:text-left">
               <h5 className="text-black mb-3">For a secure and planned future</h5>
               <p className="text-[#4F4F4F] mb-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Libero id faucibus nisl tincidunt eget nullam non nisi est.
+                With our three tier tested strategy for generating revenue,we can boast of high and stable profit!
+                Principal returned at the end of investment period! Withdrawals are made with at any time easy within
+                12hrs after request! Minimum!
               </p>
               <div>
                 <BoxButton className="hover:bg-blue-700 bg-primary text-white mr-3">Discover more</BoxButton>

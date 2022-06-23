@@ -1,12 +1,6 @@
 import { ironSession } from 'iron-session/express';
-import config from '../config/config';
+import option from '../utils/iron-option';
 
-let session = ironSession({
-  cookieName: 'auth/session',
-  password: config.ironPassword,
-  cookieOptions: {
-    secure: config.env === 'production',
-  },
-});
+let session = ironSession(option);
 
 export default session;

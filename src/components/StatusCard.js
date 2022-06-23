@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Typography, Button, Card, Box, CardContent } from '@mui/material';
-import { height } from '@mui/system';
+import { Typography, Card, Box, CardContent } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import numeral from 'numeral';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(() => ({
@@ -12,18 +14,17 @@ const RootStyle = styled(Card)(() => ({
   alignItems: 'center',
 }));
 
-const MsgWrapper = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-}));
 // ----------------------------------------------------------------------
 
 StatusCard.propTypes = {
   isWalletEmpty: PropTypes.bool,
   isVerified: PropTypes.bool,
+  user: PropTypes.object,
 };
 
-export default function StatusCard({ isWalletEmpty, isVerified }) {
+export default function StatusCard({ isWalletEmpty, isVerified, user }) {
+  const [loading, setLoading] = useState(false);
+  const handleUpdate = () => {};
   return (
     <RootStyle>
       <CardContent
@@ -34,10 +35,10 @@ export default function StatusCard({ isWalletEmpty, isVerified }) {
         }}
       >
         <Typography variant="subtitle2">Account Status</Typography>
-        <Typography variant="body2" sx={{ pb: { xs: 2, xl: 3 } }}>
+        <Typography variant="body2" sx={{ pb: 1 }}>
           {isWalletEmpty
-            ? `pls add an etherum address as this is needed for withdrawal and verification.`
-            : `congrates you can now enjoy the full features of pipsville.`}
+            ? `pls add a btc and usdt address as this is needed for withdrawal and verification.`
+            : `congrats you can now enjoy the full features of pipsville investment.`}
         </Typography>
         <Box
           sx={{
@@ -59,27 +60,42 @@ export default function StatusCard({ isWalletEmpty, isVerified }) {
             )}
           </Box>
 
-          <Typography variant="body2">Verify Account</Typography>
+          <Typography variant="body2">Verified Account</Typography>
         </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
+        {isWalletEmpty && (
           <Box
             sx={{
-              width: 50,
               display: 'flex',
-              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <AiOutlineClose style={{ color: '#ff4842', strokeWidth: 2 }} />
-          </Box>
+            <Box
+              sx={{
+                width: 50,
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <AiOutlineClose style={{ color: '#ff4842', strokeWidth: 2 }} />
+            </Box>
 
-          <Typography variant="body2">No Wallet Address</Typography>
-        </Box>
+            <Typography variant="body2">No Wallet Address</Typography>
+          </Box>
+        )}
+        <Typography variant="h5" my={1}>
+          Total Bonus: {numeral(user?.bonus).format('0.00')} USD
+        </Typography>
+        <LoadingButton
+          loading={loading}
+          sx={{
+            justifySelf: 'end',
+          }}
+          variant="contained"
+          onClick={handleUpdate}
+        >
+          Withdraw bonus
+        </LoadingButton>
       </CardContent>
     </RootStyle>
   );

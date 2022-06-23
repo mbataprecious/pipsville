@@ -2,6 +2,7 @@ import response from '../apiUtil/reponses';
 import { jwtSign } from '../apiUtil/jwt';
 import User from '../models/user.model';
 import config from '../config/config';
+import Transaction from '../models/transaction.model';
 import sendMail from '../helpers/sendVerificationMail';
 import bcrypt from 'bcrypt';
 import emailTemplate from '../helpers/emailTemplate';
@@ -56,12 +57,82 @@ export const createUser = async (req, res) => {
   }
 };
 
+export const getUserById = async (req, res) => {
+  const { userId } = req.query;
+  try {
+    const user = await User.findById(userId).select(['-password', '-createdAt', '-updatedAt', '-isVerified']).lean();
+    if (!user) {
+      return response(res, 404, 'User not found', null);
+    } else {
+      return response(res, 200, ' User retrieved successfully', user);
+    }
+  } catch (err) {
+    return response(res, 500, 'server error', err.message);
+  }
+};
+
+export const updateUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    let fetchedUser = await User.findOne({ _id: userId });
+
+    if (!fetchedUser) {
+      res.status(404).json({
+        type: 'failure',
+        message: 'User not found',
+      });
+    }
+    fetchedUser = await User.findByIdAndUpdate({ _id: userId }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      type: 'success',
+      message: 'User updated Successfully',
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      type: 'failure',
+      message: 'Internal Server error',
+      error: err.message,
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    let fetchedUser = await User.findOne({ _id: userId });
+
+    if (!fetchedUser) {
+      return res.status(404).json({
+        type: 'failure',
+        message: 'User not found',
+      });
+    } else {
+      const deletedUser = await User.deleteOne({ _id: userId });
+
+      if (deletedUser) {
+        response(res, 200, 'user deleted successfully', null);
+      }
+    }
+  } catch (err) {
+    response(res);
+    res.status(500).json({
+      type: 'failure',
+      message: 'Internal Server error',
+      error: err.message,
+    });
+  }
+};
+
 export const attachProfileById = async (req, res, next) => {
   const { userId } = req.query;
-  console.log(req.query);
   // console.log('this is the userId', userId);
   try {
-    const user = await User.findById(userId).select(['-password', '-createdAt', '-updatedAt', '-isVerified']).exec();
+    const user = await User.findById(userId).select(['-password', '-isVerified']).exec();
     if (!user) {
       return response(res, 404, 'User not found', null);
     } else {
@@ -83,5 +154,86 @@ export const verify = async (req, res) => {
   } catch (err) {
     console.log(err);
     return response(res, 500, err.message, null);
+  }
+};
+
+export const redemBonus = async (req, res) => {
+  const userId = req.profile._id;
+  const bonus = req.body.bonus;
+  const currentBalance = req.profile.accountBalance;
+
+  try {
+    //save user
+    const session = await req.db.startSession();
+    await session.withTransaction(async () => {
+      await Transaction.create(
+        [
+          {
+            userId,
+            amount: Number(bonus),
+            type: 'bonus',
+            currentBalance: Number(currentBalance + bonus),
+          },
+        ],
+        { session, new: true }
+      );
+      await User.findByIdAndUpdate(
+        userId,
+        { $inc: { accountBalance: Number(bonus) } },
+        {
+          session,
+          new: true,
+          runValidators: true,
+        }
+      );
+    });
+    await session.commitTransaction();
+    session.endSession();
+
+    return response(res, 200, 'bonus redemed successfull', null);
+  } catch (err) {
+    return response(res, 500, 'server error', err.message);
+  }
+};
+
+export const updateWallet = async (req, res) => {
+  const { _id } = req.profile;
+  try {
+    await User.findByIdAndUpdate(
+      { _id },
+      { wallets: req.body },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    return response(res, 200, 'wallet updated ssuccessfully', null);
+  } catch (err) {
+    return response(res, 500, 'server error', err.message);
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  const { _id } = req.profile;
+  try {
+    const { newPassword, oldPassword } = req.body;
+    // validate all the fields
+
+    const fetchedUser = await User.findById(_id).lean();
+
+    // check if password match
+    const isPasswordMatch = await bcrypt.compare(oldPassword, fetchedUser.password);
+    if (!isPasswordMatch) {
+      return response(res, 401, 'invalid old password');
+    } else {
+      const hash = await bcrypt.hash(newPassword, config.saltRounds);
+      const newDetails = await User.findByIdAndUpdate(_id, { password: hash }, { new: true }).lean();
+
+      const { password, ...user } = newDetails;
+      return response(res, 200, ' User retrieved successfully', user);
+    }
+  } catch (err) {
+    console.log(err);
+    return response(res, 500, 'server error', err.message);
   }
 };

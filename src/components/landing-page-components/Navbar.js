@@ -3,6 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { m } from 'framer-motion';
 import { linkArray } from './landingUtils';
+import { Typography } from '@mui/material';
 
 const variant = {
   hidden: {
@@ -16,16 +17,35 @@ const variant = {
 };
 export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const [isScroll, setIsScroll] = React.useState(false);
   const router = useRouter();
+  console.log('this is route path', router.pathname);
+  const changeBackground = () => {
+    if (window.scrollY >= 80) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+  };
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', changeBackground);
+  }
 
   return (
     <>
-      <nav className="fixed flex flex-wrap items-center justify-center px-2 py-3 bg-slate-500 mb-3 w-full z-10">
+      <nav
+        className={`fixed flex flex-wrap items-center justify-center transition-all px-2 py-3 bg-slate-500 mb-3 w-full z-10 ${
+          isScroll ? 'bg-[#0f1642]' : ''
+        }`}
+      >
         <div className="lg:container px-4 mx-auto flex flex-wrap items-center justify-between w-full">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link href="/">
-              <a className="inline-block mr-4 py-2 whitespace-nowrap">
-                <img alt="logo" src="" />
+              <a className=" mr-4 py-2 whitespace-nowrap flex items-end">
+                <img alt="logo" src="/logo/Pipsville.svg" className="w-[50px]" />
+                <Typography variant="h3" color={'white'}>
+                  PIPSVILLE
+                </Typography>
               </a>
             </Link>
             <button
@@ -65,7 +85,7 @@ export default function Navbar() {
             animate={navbarOpen ? 'visible' : 'hidden'}
             initial={variant.hidden}
             variants={variant}
-            className={'lg:flex flex-grow items-center flex lg:!h-auto bg-black lg:bg-transparent'}
+            className={'lg:flex flex-grow items-center flex lg:!h-auto bg-[#0f1642] lg:bg-transparent'}
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center w-full md:justify-end">

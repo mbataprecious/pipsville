@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       trim: true,
       unique: 'Email already exists',
+      // eslint-disable-next-line no-useless-escape
       match: [/.+\@.+\..+/, 'Please fill a valid email address'],
       required: 'Email is required',
     },
@@ -51,20 +52,27 @@ const UserSchema = new mongoose.Schema(
     },
     isVerified: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     role: {
       type: String,
       enum: ['Admin', 'User'],
       default: 'User',
     },
+    IdImg: {
+      type: String,
+    },
     accountBalance: {
+      type: Number,
+      default: 0,
+    },
+    bonus: {
       type: Number,
       default: 0,
     },
     imageUrl: {
       type: String,
-      default: 'adminPhoto.jpg',
+      default: '/img/default.png',
     },
     wallets: {
       usdt: {

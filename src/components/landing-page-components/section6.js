@@ -2,6 +2,7 @@ import React from 'react';
 
 import tradebg from '../../assets/img/bg6.png';
 import tradeImg from '../../assets/img/trade view.png';
+import { crypto } from './landingUtils';
 import Image from 'next/image';
 
 function Section6() {
@@ -19,7 +20,7 @@ function Section6() {
           </div>
           <div className="flex-1">
             <div className="md:w-[386px]">
-              {[{ color: 'FF9F43' }, { color: '8C64D2' }, { color: 'EA5455' }].map((x) => (
+              {crypto.map((x) => (
                 <div key={x.color} className="flex mb-4">
                   <div className="pt-5">
                     <div style={{ background: `#${x.color}` }} className={`rounded-full w-[20px] h-[20px]`}>
@@ -27,11 +28,8 @@ function Section6() {
                     </div>
                   </div>
                   <div className="pl-3">
-                    <h6 className="text-[#0F2851]">Professional Traders.</h6>
-                    <p className="text-[#817676]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.
-                    </p>
+                    <h6 className="text-[#0F2851]">{x.title}</h6>
+                    <p className="text-[#817676]">{x.details}</p>
                   </div>
                 </div>
               ))}

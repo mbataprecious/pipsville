@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 // material
 import { Stack, TextField, IconButton, MenuItem, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { toast } from 'react-toastify';
 // component
 import Iconify from '../../../components/Iconify';
 
@@ -70,14 +71,19 @@ export default function RegisterForm() {
       confirmPassword: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values) => {
+    onSubmit: (values) =>
       axios
         .post('/api/user', values)
         .then(function () {
-          router.push('/dashboard');
+          router.push('/unauthorized');
         })
-        .catch(function (error) {});
-    },
+        .catch(function (err) {
+          if (err.response) {
+            toast.error('error updating user pls login again');
+          } else {
+            toast.error(err.message);
+          }
+        }),
   });
 
   const handleCountryChange = () => {};

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Typography, Stack } from '@mui/material';
 // utils
-import { fNumber, fPercent } from '../../../utils/formatNumber';
+import { fPercent } from '../../../utils/formatNumber';
+import numeral from 'numeral';
 // components
 import Iconify from '../../../components/Iconify';
-import ReactApexChart from '../../../components/chart';
 
 // ----------------------------------------------------------------------
 
@@ -25,30 +25,13 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 AppWidgetSummary.propTypes = {
   chartColor: PropTypes.string.isRequired,
-  chartData: PropTypes.arrayOf(PropTypes.number).isRequired,
   percent: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
 };
 
-export default function AppWidgetSummary({ title, percent, total, chartColor, chartData }) {
+export default function AppWidgetSummary({ title, percent, total }) {
   const theme = useTheme();
-
-  const chartOptions = {
-    colors: [chartColor],
-    chart: { sparkline: { enabled: true } },
-    plotOptions: { bar: { columnWidth: '68%', borderRadius: 2 } },
-    tooltip: {
-      x: { show: false },
-      y: {
-        formatter: (seriesName) => fNumber(seriesName),
-        title: {
-          formatter: () => '',
-        },
-      },
-      marker: { show: false },
-    },
-  };
 
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
@@ -72,10 +55,8 @@ export default function AppWidgetSummary({ title, percent, total, chartColor, ch
           </Typography>
         </Stack>
 
-        <Typography variant="h3">{fNumber(total)}</Typography>
+        <Typography variant="h3">{`${numeral(total).format('0.00')}`}</Typography>
       </Box>
-
-      <ReactApexChart type="bar" series={[{ data: chartData }]} options={chartOptions} width={60} height={36} />
     </Card>
   );
 }

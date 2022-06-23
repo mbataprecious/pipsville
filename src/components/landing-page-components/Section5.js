@@ -1,6 +1,6 @@
 import React from 'react';
 import bgImage from '../../assets/img/bg5.png';
-import icon1 from '../../assets/img/icon1.png';
+import { weDo } from './landingUtils';
 import Image from 'next/image';
 
 function Section5() {
@@ -10,17 +10,14 @@ function Section5() {
       <div className="relative lg:container px-4 mx-auto">
         <h5 className="text-[#fff] pt-4 text-center">What We Do</h5>
         <div className="flex flex-col md:flex-row md:justify-between mt-[7rem] p-10 md:p-14 bg-[#1081E8BF] w-full">
-          {[1, 2, 3].map((x) => (
+          {weDo.map(({ title, details, img }) => (
             <div
-              key={x}
+              key={title}
               className="flex text-[#4F4F4F] mb-6 md:mb-0 text-center w-full md:w-[31%] flex-col items-center p-5 bg-[#F9FBFF]"
             >
-              <Image src={icon1} alt="icon market" width={75} height={71.1} />
-              <h6 className="my-2 ">Market Strategy</h6>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Mi tempus imperdiet nulla malesuada pellentesque. In est ante in nibh..
-              </p>
+              <Image src={img} alt="icon market" width={75} height={71.1} />
+              <h6 className="my-2 ">{title}</h6>
+              <p>{details}</p>
             </div>
           ))}
         </div>

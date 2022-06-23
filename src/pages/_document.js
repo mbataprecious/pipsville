@@ -20,9 +20,9 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/logo/pipsville.svg" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/logo/pipsville.svg" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/logo/pipsville.svg" />
 
           <meta name="theme-color" content={palette.light.primary.main} />
           <link rel="manifest" href="/manifest.json" />
@@ -35,10 +35,13 @@ export default class MyDocument extends Document {
 
           <meta
             name="description"
-            content="The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style"
+            content="Pipsville investments, the new way to secure investments,planning and financial freedom"
           />
-          <meta name="keywords" content="react,material,kit,application,dashboard,admin,template" />
-          <meta name="author" content="Minimal UI Kit" />
+          <meta
+            name="keywords"
+            content="Pipsvile investment,investment,real-estate,cypto,mining,bitcoin,etherum,withdrawal"
+          />
+          <meta name="author" content="Pipsville investment limited" />
         </Head>
 
         <body>

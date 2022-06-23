@@ -3,8 +3,17 @@ import * as Yup from 'yup';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Box, Stack, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { toast } from 'react-toastify';
+import { useSWRConfig } from 'swr';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 
-function PasswordBlock() {
+PasswordBlock.propTypes = {
+  user: PropTypes.object,
+  url: PropTypes.string,
+};
+function PasswordBlock({ user, url }) {
+  const { mutate } = useSWRConfig();
   const RegisterSchema = Yup.object().shape({
     oldPassword: Yup.string().required('old password required'),
     newPassword: Yup.string().min(5, 'must have atleast 5 char long').required('Password is required'),
@@ -20,7 +29,23 @@ function PasswordBlock() {
       confirmPassword: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {},
+    onSubmit: ({ confirmPassword, ...values }, action) =>
+      axios
+        .post(`/api/user/${user._id}/password`, values)
+        .then((res) => {
+          mutate(url);
+          toast.success(res.data.message);
+          action.resetForm();
+        })
+        .catch((err) => {
+          // console.log(err.response?.data.message);
+
+          if (err.response) {
+            toast.error('error, pls try again');
+          } else {
+            toast.error(err.message);
+          }
+        }),
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;

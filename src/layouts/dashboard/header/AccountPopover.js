@@ -7,6 +7,11 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar } from '@mui/material
 // components
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { getUserById } from '../../../helpers/fetchers';
+import useSWR from 'swr';
 
 // ----------------------------------------------------------------------
 
@@ -20,12 +25,27 @@ const MENU_OPTIONS = [
     linkTo: '/dashboard/profile',
   },
 ];
-
+AccountPopover.propst;
 // ----------------------------------------------------------------------
-
-export default function AccountPopover() {
+AccountPopover.propTypes = {
+  user: PropTypes.object,
+};
+export default function AccountPopover({ user }) {
+  const url = `/api/user/${user._id}`;
+  const { data } = useSWR(url, getUserById);
+  const profile = data ? data : user;
   const [open, setOpen] = useState(null);
+  const router = useRouter();
 
+  const logout = () => {
+    router.push('/login');
+    axios
+      .get('/api/auth/logout')
+      .then(() => {
+        console.log('logged out.');
+      })
+      .catch((err) => {});
+  };
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -53,7 +73,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src="https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_5.jpg" alt="Rayan Moran" />
+        <Avatar src={profile.imageUrl} alt={`${profile.firstName} ${profile.lastName}`} />
       </IconButtonAnimate>
 
       <MenuPopover
@@ -72,7 +92,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            Rayan Moran
+            {`${user.firstName} ${user.lastName} `}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             rayan.moran@gmail.com
@@ -93,7 +113,9 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem sx={{ m: 1 }}>Logout</MenuItem>
+        <MenuItem onClick={logout} sx={{ m: 1 }}>
+          Logout
+        </MenuItem>
       </MenuPopover>
     </>
   );

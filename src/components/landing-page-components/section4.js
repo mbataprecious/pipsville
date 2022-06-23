@@ -11,10 +11,13 @@ function section4() {
           <h5 className="">Financial Freedom without Boundaries</h5>
           <hr className="bg-primary h-1 my-4 w-[82px] " />
           <p className="text-[#4F4F4F]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Mi tempus imperdiet nulla malesuada pellentesque. In est ante in nibh. Blandit volutpat
-            maecenas volutpat blandit aliquam etiam erat velit scelerisque. Blandit volutpat maecenas volutpat blandit
-            aliquam etiam erat velit scelerisque.
+            Pipsville has an unrivalled national portfolio of developments that include off-plan and new-build
+            buy-to-let investment opportunities in the best-performing locations for returns. As the UK’s leading
+            property consultancy, our extensive track record and our exclusive partnerships allow us to present our
+            clients with high-performing UK property investments that traditionally would only be available to
+            institutional investors and funds. Before we launch a new development, we undertake extensive due diligence
+            to ensure our clients can invest with utmost confidence. We balance a regional focus with a national
+            outlook, working with investors to meet their individual needs.
           </p>
         </div>
         <div className="flex-1 pt-4">

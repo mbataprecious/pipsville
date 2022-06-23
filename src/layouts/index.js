@@ -8,12 +8,13 @@ import LogoOnlyLayout from './LogoOnlyLayout';
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.oneOf(['dashboard', 'main', 'logoOnly']),
+  user: PropTypes.object,
 };
 
-export default function Layout({ variant = 'dashboard', children }) {
+export default function Layout({ variant = 'dashboard', user, children }) {
   if (variant === 'logoOnly') {
     return <LogoOnlyLayout> {children} </LogoOnlyLayout>;
   }
 
-  return <DashboardLayout> {children} </DashboardLayout>;
+  return <DashboardLayout user={user}> {children} </DashboardLayout>;
 }

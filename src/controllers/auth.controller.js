@@ -40,12 +40,20 @@ export const login = async (req, res) => {
       //setting session when user is verified
       req.session.user = user;
       await req.session.save();
-      console.log(req.session);
 
       return response(res, 200, ' User retrieved successfully', user);
     }
   } catch (err) {
     console.log(err);
     return response(res, 500, 'server error', err.message);
+  }
+};
+
+export const logout = async (req, res) => {
+  if (req.session.user) {
+    await req.session.destroy();
+    return response(res, 200, 'logged out', null);
+  } else {
+    return response(res, 400, 'no user to log out', null);
   }
 };

@@ -3,6 +3,7 @@ import SvgIconStyle from '../../../components/SvgIconStyle';
 import { FiHome } from 'react-icons/fi';
 import { GiWallet } from 'react-icons/gi';
 import { AiFillSetting } from 'react-icons/ai';
+import { BsCreditCard2Back } from 'react-icons/bs';
 
 // ----------------------------------------------------------------------
 
@@ -14,13 +15,13 @@ const ICONS = {
   dashboard: <FiHome />,
   wallet: <GiWallet />,
   settings: <AiFillSetting />,
+  withdrawal: <BsCreditCard2Back />,
 };
 
 const sidebarConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'general v3.0.0',
     items: [
       { title: 'Dashboard', path: '/dashboard/home', icon: ICONS.dashboard },
       {
@@ -28,12 +29,13 @@ const sidebarConfig = [
         path: '/dashboard/invest',
         children: [
           { title: 'investment plans', path: '/dashboard/invest/plans' },
-          { title: 'Daily Earnings', path: '/dashboard/invest/interest' },
-          { title: 'Investment', path: '/dashboard/invest/all' },
+          { title: 'Investments', path: '/dashboard/invest/all' },
+          { title: 'Pending Invt.', path: '/dashboard/invest/pending' },
         ],
         icon: ICONS.analytics,
       },
       { title: 'Wallet', path: '/dashboard/wallet', icon: ICONS.wallet },
+      { title: 'Withdrawal', path: '/dashboard/withdrawal', icon: ICONS.withdrawal },
       { title: 'Settings', path: '/dashboard/profile', icon: ICONS.settings },
     ],
   },

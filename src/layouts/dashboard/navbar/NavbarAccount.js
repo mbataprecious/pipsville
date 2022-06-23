@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Link, Typography, Avatar } from '@mui/material';
+import useSWR from 'swr';
+import { getUserById } from '../../../helpers/fetchers';
 
 // ----------------------------------------------------------------------
 
@@ -20,9 +22,13 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 NavbarAccount.propTypes = {
   isCollapse: PropTypes.bool,
+  user: PropTypes.array,
 };
 
-export default function NavbarAccount({ isCollapse }) {
+export default function NavbarAccount({ isCollapse, user }) {
+  const url = `/api/user/${user._id}`;
+  const { data } = useSWR(url, getUserById);
+  let profile = data ? data : user;
   return (
     <Link underline="none" color="inherit">
       <RootStyle
@@ -32,7 +38,7 @@ export default function NavbarAccount({ isCollapse }) {
           }),
         }}
       >
-        <Avatar src="https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_5.jpg" alt="Rayan Moran" />
+        <Avatar src={profile.imageUrl} alt={`${profile.firstName} ${profile.lastName}`} />
 
         <Box
           sx={{
@@ -48,7 +54,7 @@ export default function NavbarAccount({ isCollapse }) {
           }}
         >
           <Typography variant="subtitle2" noWrap>
-            Rayan Moran
+            {`${profile.firstName} ${profile.lastName}`}
           </Typography>
           <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
             user

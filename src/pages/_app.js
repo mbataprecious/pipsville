@@ -17,6 +17,7 @@ import App from 'next/app';
 import { getSettings } from '../utils/settings';
 //react-toastify
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // contexts
 import { SettingsProvider } from '../contexts/SettingsContext';
 import { CollapseDrawerProvider } from '../contexts/CollapseDrawerContext';
@@ -58,10 +59,11 @@ export default function MyApp(props) {
                   {getLayout(<Component {...pageProps} />)}
                   <ToastContainer
                     position="top-right"
-                    autoClose={5000}
+                    autoClose={4000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
+                    theme="colored"
                     rtl={false}
                     pauseOnFocusLoss
                     draggable

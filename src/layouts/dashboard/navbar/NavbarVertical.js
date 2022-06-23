@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Stack, Drawer } from '@mui/material';
+import { ListItemStyle, ListItemTextStyle, ListItemIconStyle } from '../../../components/nav-section/vertical/style';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 import useCollapseDrawer from '../../../hooks/useCollapseDrawer';
@@ -19,6 +20,8 @@ import { NavSectionVertical } from '../../../components/nav-section';
 //
 import navConfig from './NavConfig';
 import NavbarAccount from './NavbarAccount';
+import { BiLogOut } from 'react-icons/bi';
+import axios from 'axios';
 // import CollapseButton from './CollapseButton';
 
 // ----------------------------------------------------------------------
@@ -37,10 +40,21 @@ const RootStyle = styled('div')(({ theme }) => ({
 NavbarVertical.propTypes = {
   isOpenSidebar: PropTypes.bool,
   onCloseSidebar: PropTypes.func,
+  user: PropTypes.array,
 };
 
-export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
+export default function NavbarVertical({ isOpenSidebar, onCloseSidebar, user }) {
   const theme = useTheme();
+  const router = useRouter();
+  const logout = () => {
+    router.push('/login');
+    axios
+      .get('/api/auth/logout')
+      .then(() => {
+        console.log('logged out.');
+      })
+      .catch((err) => {});
+  };
 
   const { pathname } = useRouter();
 
@@ -80,10 +94,18 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
           )} */}
         </Stack>
 
-        <NavbarAccount isCollapse={isCollapse} />
+        <NavbarAccount user={user} isCollapse={isCollapse} />
       </Stack>
 
       <NavSectionVertical navConfig={navConfig} isCollapse={isCollapse} />
+      <Box px={2}>
+        <ListItemStyle onClick={logout}>
+          <ListItemIconStyle>
+            <BiLogOut />
+          </ListItemIconStyle>
+          <ListItemTextStyle disableTypography primary={'logout'} />
+        </ListItemStyle>
+      </Box>
 
       <Box sx={{ flexGrow: 1 }} />
 

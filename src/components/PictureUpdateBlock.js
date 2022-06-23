@@ -2,8 +2,12 @@ import React, { useCallback, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography, Stack, Box } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import defaultImg from '../assets/img/default.png';
-import Image from 'next/image';
+import CopyClipboard from './CopyToClipboard';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useSWRConfig } from 'swr';
+import PropTypes from 'prop-types';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -32,8 +36,14 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-function PictureUpdateBlock() {
+PictureUpdateBlock.propTypes = {
+  user: PropTypes.object,
+  url: PropTypes.string,
+};
+function PictureUpdateBlock({ user, url }) {
+  const { mutate } = useSWRConfig();
   const [error, setError] = useState('');
+
   const [progressInfo, setProgressInfo] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
   const [progressLoading, setProgressLoading] = useState(false);
@@ -61,22 +71,24 @@ function PictureUpdateBlock() {
           setProgressInfo(Math.floor((loaded * 100) / total));
         },
       };
-      //   axios
-      //     .post(`user/${userData.id}/photo`, photoData, config)
-      //     .then((res) => {
-      //       setProgressLoading(false);
-      //       toast.success(`img update successful`);
-      //       dispatch(updateUserData({ imageUrl: res.data.imageUrl }));
-      //     })
-      //     .catch((err) => {
-      //       // console.log(err.response?.data.message);
-      //       setProgressLoading(false);
-      //       if (err.response) {
-      //         toast.error(err.response.data.message);
-      //       } else {
-      //         toast.error(err.message);
-      //       }
-      //     });
+
+      axios
+        .post(`/api/user/${user._id}/photo`, photoData, config)
+        .then((res) => {
+          mutate(url);
+          res.data.data;
+          setProgressLoading(false);
+          toast.success(`img update successful`);
+        })
+        .catch((err) => {
+          // console.log(err.response?.data.message);
+          setProgressLoading(false);
+          if (err.response) {
+            toast.error(err.response.data.message);
+          } else {
+            toast.error(err.message);
+          }
+        });
     }
   };
 
@@ -92,7 +104,7 @@ function PictureUpdateBlock() {
           }}
         >
           <div className="my-3 upload-img overflow-hidden rounded-full h-[8.6875rem] w-[8.6875rem] flex justify-center items-center text-center relative">
-            <Image src={defaultImg} className="absolute inset-0" alt="profile" />
+            <img src={imageUrl ? imageUrl : user.imageUrl} className="absolute inset-0" alt="profile" />
             {!progressLoading ? (
               <>
                 {' '}
@@ -134,16 +146,20 @@ function PictureUpdateBlock() {
         </Typography>
         <Stack spacing={1} direction={'row'}>
           <Typography variant="subtitle2">email</Typography>
-          <Typography variant="body2">mbataprecious@gmail.com</Typography>
+          <Typography variant="body2">{user.email}</Typography>
         </Stack>
         <Stack spacing={1} direction={'row'}>
           <Typography variant="subtitle2">country</Typography>
-          <Typography variant="body2">Nigeria</Typography>
+          <Typography variant="body2">{user.country}</Typography>
         </Stack>
         <Stack spacing={1} direction={'row'}>
           <Typography variant="subtitle2">State</Typography>
-          <Typography variant="body2">Imo</Typography>
+          <Typography variant="body2">{user.state}</Typography>
         </Stack>
+        <Typography mt={3} variant="subtitle2">
+          Referral:{' '}
+        </Typography>
+        <CopyClipboard value={`${window.location.hostname}/register?id=${user._id}`} size="small" disabled />
       </Stack>
     </RootStyle>
   );
