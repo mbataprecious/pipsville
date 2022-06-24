@@ -195,6 +195,25 @@ export const redemBonus = async (req, res) => {
     return response(res, 500, 'server error', err.message);
   }
 };
+export const addBonus = async (req, res) => {
+  const userId = req.profile._id;
+  const bonus = req.body.bonus;
+
+  try {
+    await User.findByIdAndUpdate(
+      userId,
+      { $inc: { bonus: Number(bonus) } },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    return response(res, 200, 'bonus redemed successfull', null);
+  } catch (err) {
+    return response(res, 500, 'server error', err.message);
+  }
+};
 
 export const updateWallet = async (req, res) => {
   const { _id } = req.profile;

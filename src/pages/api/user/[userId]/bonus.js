@@ -1,5 +1,5 @@
 import nc from 'next-connect';
-import { attachProfileById, redemBonus } from '../../../../controllers/user.controller';
+import { attachProfileById, redemBonus, addBonus } from '../../../../controllers/user.controller';
 import database from '../../../../middleware/database';
 
 const handler = nc({
@@ -14,6 +14,7 @@ const handler = nc({
 })
   .use(database)
   .use(attachProfileById)
-  .post(redemBonus);
+  .post(redemBonus)
+  .put(addBonus);
 
 export default handler;

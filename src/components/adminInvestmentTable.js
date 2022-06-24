@@ -23,14 +23,26 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 export default function InvestmentTable({ rows }) {
-  const headCells = ['ID', 'Date', 'Coin', 'Transaction ID', 'Capital', 'email', 'Earning', 'daily count', 'status'];
+  const headCells = [
+    'ID',
+    'Date',
+    'Coin',
+    'Transaction ID',
+    'Capital',
+    'email',
+    'Earning',
+    'daily count',
+    'status',
+    '',
+    '',
+  ];
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const handleActive = (row) => {
     const { _id, userId } = row;
     setLoading(true);
     axios
-      .post(`/api/user/${userId._id}/invest/${_id}/approved`)
+      .post(`/api/user/${userId._id}/invest/${_id}/approve`)
       .then((res) => {
         setLoading(false);
         toast.success(res.data.message);
@@ -45,6 +57,21 @@ export default function InvestmentTable({ rows }) {
         }
       });
   };
+
+  // const headCells = [
+  //   'ID',
+  //   'Date',
+  //   'Coin',
+  //   'Transaction ID',
+  //   'Capital',
+  //   'email',
+  //   'Earning',
+  //   'daily count',
+  //   'status',
+  //   '',
+  //   '',
+  // ];
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -59,18 +86,16 @@ export default function InvestmentTable({ rows }) {
           {!!rows.length &&
             rows.map((row) => (
               <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row._id}</TableCell>
-                <TableCell align="right">{fDate(row.createdAt)}</TableCell>
-                <TableCell align="right">{row.currency}</TableCell>
-                <TableCell align="right">{row.capital}</TableCell>
-                <TableCell align="right">{row.userId.email}</TableCell>
-                <TableCell align="right">{row.transactionId}</TableCell>
-                <TableCell align="right">{fCurrency((plans[row.planId].interest / 100) * row.capital)}</TableCell>
-                <TableCell align="right">{row.dayCount}</TableCell>
-                <TableCell align="right">
+                <TableCell align="left">{row._id}</TableCell>
+                <TableCell align="left">{fDate(row.createdAt)}</TableCell>
+                <TableCell align="left">{row.currency}</TableCell>
+                <TableCell align="left">{row.transactionId}</TableCell>
+                <TableCell align="left">{row.capital}</TableCell>
+                <TableCell align="left">{row.userId.email}</TableCell>
+
+                <TableCell align="left">{fCurrency((plans[row.planId].interest / 100) * row.capital)}</TableCell>
+                <TableCell align="left">{row.dayCount}</TableCell>
+                <TableCell align="left">
                   <Label
                     variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                     color={(row.status === 'pending' && 'warning') || (row.status === 'ended' && 'error') || 'success'}
@@ -78,7 +103,7 @@ export default function InvestmentTable({ rows }) {
                     {sentenceCase(row.status)}
                   </Label>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   {row.status === 'pending' ? (
                     <LoadingButton
                       onClick={() => handleActive(row)}
@@ -132,7 +157,7 @@ function AddActive({ investment }) {
   const handleAdd = () => {
     setLoading(true);
     axios
-      .post(`/api/user/${userId._id}/invest/${_id}/daily`)
+      .post(`/api/user/${userId._id}/invest/${_id}/daily`, { daily: value })
       .then((res) => {
         setLoading(false);
         toast.success(res.data.message);

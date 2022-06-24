@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import { Typography, TextField, Modal, Button } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Label from './Label';
 import { visuallyHidden } from '@mui/utils';
@@ -207,7 +208,7 @@ export default function EnhancedTable({ rows }) {
                           Verify Now
                         </LoadingButton>
                       ) : (
-                        <></>
+                        <AddBonus user={row} />
                       )}
                     </TableCell>
                   </TableRow>
@@ -235,5 +236,72 @@ export default function EnhancedTable({ rows }) {
         />
       </Paper>
     </Box>
+  );
+}
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+AddBonus.propTypes = {
+  user: PropTypes.array.isRequired,
+};
+function AddBonus({ user }) {
+  const { _id } = user;
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [value, setValue] = useState('');
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+  const handleAdd = () => {
+    setLoading(true);
+    axios
+      .put(`/api/user/${_id}/bonus`, { bonus: value })
+      .then((res) => {
+        setLoading(false);
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        // console.log(err.response?.data.message);
+        setLoading(false);
+        if (err.response) {
+          toast.error('error, pls try again');
+        } else {
+          toast.error(err.message);
+        }
+      });
+  };
+
+  return (
+    <div>
+      <Button onClick={handleOpen}>Add Bonus</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography mb={4} variant="subtitle2">
+            Note: This is for only active Users
+          </Typography>
+          <TextField onChange={handleChange} value={value} type={'number'} />
+          <LoadingButton onClick={handleAdd} loading={loading} variant="contained">
+            Add Bonus
+          </LoadingButton>
+        </Box>
+      </Modal>
+    </div>
   );
 }

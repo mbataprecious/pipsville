@@ -1,12 +1,5 @@
 const plans = [
   {
-    id: 0,
-    name: 'starter',
-    interest: 0.5,
-    minimum: 100,
-    maximum: 299,
-  },
-  {
     id: 1,
     name: 'bronze',
     interest: 1,

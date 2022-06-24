@@ -28,15 +28,14 @@ export const invest = async (req, res) => {
 };
 export const updateInvt = async (req, res) => {
   try {
-    const invtId = req.params.investmentId;
-    console.log(req.investment);
-    let invest = await Investment.findByIdAndUpdate(invtId, { ...req.body }, { new: true });
+    const invtId = req.query.investmentId;
 
-    if (invest) {
-      return response(res, 200, 'success', invest);
-    }
+    console.log(req.investment);
+    let invest = await Investment.findByIdAndUpdate(invtId, req.body, { new: true });
+
+    return response(res, 200, 'success', invest);
   } catch (err) {
-    return response(res, 500, 'failure', null);
+    return response(res, 500, 'failure', err);
   }
 };
 export const deleteInvt = async (req, res) => {
@@ -88,7 +87,7 @@ export const approveInvestment = async (req, res) => {
     await session.withTransaction(async () => {
       const investment = await Investment.findByIdAndUpdate(
         investmentId,
-        { approvedDate: Date.now(), withDrawalDate: add(new Date(), { days: 30 }) },
+        { approvedDate: Date.now(), status: 'active', withDrawalDate: add(new Date(), { days: 30 }).toISOString() },
         { session, new: true }
       ).exec();
 

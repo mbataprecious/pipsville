@@ -67,6 +67,10 @@ function PendingCards({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleSubmit = () => {
+    if (transactionId.length <= 5) {
+      toast.error('invalid transactionId');
+      return;
+    }
     setIsSubmitting(true);
     axios
       .post(`/api/user/${user._id}/invest/${_id}`, { transactionId })

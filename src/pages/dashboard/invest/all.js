@@ -14,8 +14,9 @@ import pageAuth from '../../../middleware/pageAuthAccess';
 // ----------------------------------------------------------------------
 async function handler({ req }) {
   const user = serializeFields(req.user);
-  console.log('this is user', user);
-  const allInvestments = await Investment.find({ userId: user._id, transactionId: { $exists: true } }).lean();
+  const allInvestments = serializeFields(
+    await Investment.find({ userId: user._id, transactionId: { $exists: true } }).lean()
+  );
   return {
     props: {
       user,
@@ -43,7 +44,7 @@ AllInvestments.getLayout = function getLayout(page) {
 
 export default function AllInvestments({ user, allInvestments }) {
   const { themeStretch } = useSettings();
-
+  console.log(allInvestments);
   return (
     <Page title="investment list">
       <Container maxWidth={themeStretch ? false : 'xl'}>

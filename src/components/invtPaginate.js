@@ -16,6 +16,7 @@ import { fCurrency } from '../utils/formatNumber';
 import Label from './Label';
 import { sentenceCase } from 'change-case';
 import { useTheme } from '@mui/material';
+import plans from '../helpers/plans';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,7 +63,7 @@ const headCells = [
   },
   {
     id: 'coin',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Coin',
   },
@@ -76,19 +77,25 @@ const headCells = [
     id: 'depositAmount',
     numeric: true,
     disablePadding: false,
-    label: 'Deposite Amount',
+    label: 'Amount',
   },
   {
     id: 'approvalDate',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Approval Date',
   },
   {
     id: 'withDrawalDate',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'WithDrawal Due Date',
+  },
+  {
+    id: 'status',
+    numeric: false,
+    disablePadding: false,
+    label: 'Status',
   },
 ];
 
@@ -128,12 +135,9 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 EnhancedTable.propTypes = {
   rows: PropTypes.array.isRequired,
@@ -178,12 +182,15 @@ export default function EnhancedTable({ rows }) {
                 .map((row) => (
                   <TableRow hover tabIndex={-1} key={row._id}>
                     <TableCell align="left">{row._id.toUpperCase()}</TableCell>
-                    <TableCell align="left">{row.plan}</TableCell>
+                    <TableCell align="left">{plans[row.planId].name}</TableCell>
                     <TableCell align="left">{row.currency}</TableCell>
                     <TableCell align="left">{row.transactionId}</TableCell>
                     <TableCell align="left">{fCurrency(row.capital)}</TableCell>
-                    <TableCell align="left">{fDate(row.approvedDate)}</TableCell>
-                    <TableCell align="left">{fDate(row.withDrawalDate)}</TableCell>
+                    <TableCell align="left">{row.approvedDate ? fDate(row.approvedDate) : 'Not Approved'}</TableCell>
+                    <TableCell align="left">
+                      {' '}
+                      {row.withDrawalDate ? fDate(row.withDrawalDate) : 'Not Approved'}
+                    </TableCell>
                     <TableCell align="left">
                       {' '}
                       <Label
