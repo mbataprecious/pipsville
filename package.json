@@ -39,6 +39,7 @@
     "next": "^12.1.6",
     "next-connect": "^0.12.2",
     "nodemailer": "^6.7.5",
+    "nodemailer-mailgun-transport": "^2.1.4",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "react": "^17.0.1",

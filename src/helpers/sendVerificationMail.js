@@ -5,7 +5,7 @@ console.log('this are the details ', config.password, config.email);
 let transporter = nodemailer.createTransport({
   host: config.mailServer, //replace with your email provider
   port: config.smtpPort,
-  // secure: true,
+  secure: true,
   auth: {
     user: config.email,
     pass: config.password,
@@ -18,6 +18,7 @@ let transporter = nodemailer.createTransport({
 // verify connection configuration
 transporter.verify(function (error, success) {
   if (error) {
+    console.log(error);
     console.log(error.message, 'verification error');
   } else {
     console.log('Server is ready to take our messages', success);

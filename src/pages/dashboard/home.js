@@ -30,18 +30,19 @@ async function handler({ req }) {
   const user = serializeFields(req.user);
   console.log('this is user', user);
   const totalEarnings = await Transaction.aggregate([
-    { $match: { $and: [{ userId: user._id }, { $or: [{ type: 'daily' }, { type: 'bonus' }] }] } },
+    { $match: { $and: [{ userId: req.user._id }, { $or: [{ type: 'daily' }, { type: 'bonus' }] }] } },
     { $group: { _id: '$userId', totalEarnings: { $sum: '$amount' } } },
   ]);
   const allApprovedInvestment = await Transaction.aggregate([
-    { $match: { $and: [{ userId: user._id }, { type: 'investment' }] } },
-    { $group: { _id: '$userId', totalEarnings: { $sum: '$amount' } } },
+    { $match: { $and: [{ userId: req.user._id }, { type: 'investment' }] } },
+    { $group: { _id: '$userId', totalInvestment: { $sum: '$amount' } } },
   ]);
   const totalWithdrawal = await Withdrawal.aggregate([
-    { $match: { userId: user._id } },
+    { $match: { $and: [{ userId: req.user._id }, { approvedDate: { $exists: true } }] } },
     { $group: { _id: '$userId', totalWithdrawal: { $sum: '$amount' } } },
   ]);
-  const withdrawalList = await Withdrawal.find({ userId: user._id }).lean();
+  const withdrawalList = serializeFields(await Withdrawal.find({ userId: user._id }).lean());
+  console.log(totalEarnings, allApprovedInvestment, withdrawalList);
   // withdrawalList.map(list=>())
   return {
     props: {
@@ -49,7 +50,7 @@ async function handler({ req }) {
       withdrawalList,
       totalWithdrawal: totalWithdrawal.length ? totalWithdrawal[0].totalWithdrawal : 0,
       totalEarnings: totalEarnings.length ? totalEarnings[0].totalEarnings : 0,
-      totalInvestment: allApprovedInvestment.length ? totalEarnings[0].totalEarnings : 0,
+      totalInvestment: allApprovedInvestment.length ? allApprovedInvestment[0].totalInvestment : 0,
       fallback: {
         [`/api/user/${user._id}`]: user,
       },
