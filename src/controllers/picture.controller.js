@@ -39,8 +39,7 @@ export const uploadPhoto = async (req, res) => {
 export const verifyUpload = async (req, res) => {
   try {
     const { _id } = req.profile;
-    console.log(_id);
-    console.log('this is the req', req.files); //const file = await re.files.photo;
+    //const file = await re.files.photo;
     const file = req.files.photo;
 
     console.log(file);

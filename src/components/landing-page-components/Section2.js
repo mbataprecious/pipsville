@@ -2,10 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 import bgImage from '../../assets/img/sec2bg.png';
 import BoxButton from './BoxButton';
+import { useRouter } from 'next/router';
 
 //we participates in providing cloud server mining and incorporates Proof of Stake (PoS) using technology, developed by a Group of Experts in the field of IT and Cryptocurrencies
 
 function Section2() {
+  const router = useRouter();
   return (
     <section>
       <div className="relative pb-20">
@@ -21,7 +23,12 @@ function Section2() {
                 12hrs after request! Minimum!
               </p>
               <div>
-                <BoxButton className="hover:bg-blue-700 bg-primary text-white mr-3">Discover more</BoxButton>
+                <BoxButton
+                  className="hover:bg-blue-700 bg-primary text-white mr-3"
+                  onClick={() => router.push('/register')}
+                >
+                  Discover more
+                </BoxButton>
               </div>
             </div>
           </div>

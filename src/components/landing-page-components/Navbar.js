@@ -107,7 +107,7 @@ export default function Navbar() {
               ))}
 
               <li className="nav-item">
-                <Link href={'/login'}>
+                <Link href={'/register'}>
                   <a className="px-3 py-2 flex items-center text-xs leading-snug text-white">
                     <button className="font-display text-[1rem] border-none focus:outline-none outline-none hover:bg-blue-700  p-[0.875rem] bg-primary text-white mr-3">
                       Discover more

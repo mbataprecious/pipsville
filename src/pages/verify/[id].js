@@ -97,9 +97,10 @@ const rejectStyle = {
 export async function getServerSideProps({ req, res, params }) {
   let { id } = params;
   console.log(id);
-  let userId = await jwtVerify(id, config.jwtSecret);
+  let { user } = await jwtVerify(id, config.jwtSecret);
+  console.log(user);
   return {
-    props: { userId },
+    props: { userId: user },
   };
 }
 

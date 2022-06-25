@@ -1,7 +1,7 @@
 export const linkArray = [
   {
     title: 'About Us',
-    url: '/about',
+    url: '/#about',
   },
   {
     title: 'Contat Us',
