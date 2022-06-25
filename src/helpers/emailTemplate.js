@@ -52,7 +52,7 @@ const emailTemplate = (name = '', verificationLink) => `<!DOCTYPE html>
                       Proceed to identity verification by clicking the proceed button below</p>
                     <p
                       style="margin:0;font-size:16px;line-height:24px;font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; ">
-                      note, this link expires sfter 2hrs. Login to continue.</p>
+                      note, this link expires in 30 days. Login to continue.</p>
                   </td>
                 </tr>
                 <tr>
@@ -109,22 +109,13 @@ const emailTemplate = (name = '', verificationLink) => `<!DOCTYPE html>
                                       <table border="0" cellspacing="0" cellpadding="0">
                                         <tbody>
                                         <tr>
-                                        <td align="left" style="vertical-align:top;"><a
-                                            rel="nofollow noopener noreferrer" target="_blank"
-                                            href="https://web.facebook.com/YahooMail/?_rdc=1&_rdr"
-                                            style="color:#000001;text-decoration:none;"><img
-                                              src="https://ecp.yusercontent.com/mail?url=http%3A%2F%2Fepidm.edgesuite.net%2FCMS%2FCoding%2FYahoo%2F2018%2F09_Sept%2F01412329%2F01412329_Yahoo_Facebook.jpg&amp;t=1650287225&amp;ymreqid=2756376f-0b3e-24f5-1ca2-e1000a01d700&amp;sig=u6cl5lZHhnCs7GxMKs.pDg--~D"
-                                              width="39" height="39" border="0" alt="Facebook"
-                                              style="display:block;font-size:14px;color:#fffffe; margin-right: 6px; border-radius: 50%;"></a>
-                                        </td>
 
                                         <td align="left" style="vertical-align:top;"><a
                                             rel="nofollow noopener noreferrer" target="_blank"
-                                            href="https://yahoomail.tumblr.com/"
-                                            style="color:#000001;text-decoration:none;"><img
-                                              src="https://ecp.yusercontent.com/mail?url=http%3A%2F%2Fepidm.edgesuite.net%2FCMS%2FCoding%2FYahoo%2F2018%2F09_Sept%2F01412329%2F01412329_Yahoo_Tumblr.jpg&amp;t=1650287225&amp;ymreqid=2756376f-0b3e-24f5-1ca2-e1000a01d700&amp;sig=zkjzOKBMevP9iz6nou7uVA--~D"
-                                              width="41" height="41" border="0" alt="Tumblr"
-                                              style="display:block;font-size:14px;color:#fffffe; border-radius: 50%;"></a>
+                                            href="https://t.me/PipsvilleCrypto_support"
+                                            style="color:#ffffff;text-decoration:none;">
+                                            
+                                            <svg stroke="currentColor" fill="currentColor" style="width:41px;height:41px;" stroke-width="0" viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"></path></svg>
                                         </td>
                                       </tr>
                                         </tbody>
@@ -162,10 +153,10 @@ const emailTemplate = (name = '', verificationLink) => `<!DOCTYPE html>
                               <a rel="nofollow noopener noreferrer" target="_blank" href="#"
                                 style="color:#ffffff;text-decoration:none;"><span class="yiv9127454720link">Privacy
                                   Policy</span></a>&nbsp;|&nbsp;<a rel="nofollow noopener noreferrer" target="_blank"
-                                href="https://help.yahoo.com/kb/account"
+                                href="https://t.me/PipsvilleCrypto_support"
                                 style="color:#ffffff;text-decoration:none;"><span
                                   class="yiv9127454720link">Customer&nbsp;Support</span></a>&nbsp;|&nbsp;<a
-                                rel="nofollow noopener noreferrer" target="_blank" href="https://www.yahoo.com/"
+                                rel="nofollow noopener noreferrer" target="_blank" href="pipsville.top"
                                 style="color:#ffffff;text-decoration:none;"><span class="yiv9127454720link">View
                                   Online</span></a>
                             </td>
@@ -176,10 +167,10 @@ const emailTemplate = (name = '', verificationLink) => `<!DOCTYPE html>
                               Ensure that you continue to receive your e-mails from Yahoo Mail.<br>
 
                               Please add <a rel="nofollow noopener noreferrer"
-                                ymailto="mailto:yahoo@mail.comms.yahoo.net" target="_blank"
-                                href="mailto:yahoo@mail.comms.yahoo.net"
+                                target="_blank"
+                                href="https://t.me/PipsvilleCrypto_support"
                                 style="color:#ffffff;text-decoration:none;"><span
-                                  style="color:#ffffff;text-decoration:none;">yahoo@mail.comms.yahoo.net</span></a> to
+                                  style="color:#ffffff;text-decoration:none;">Pipsville Investment</span></a> to
                               your Address Book or Safe List.</td>
                           </tr>
                           <tr>

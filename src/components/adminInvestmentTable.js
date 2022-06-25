@@ -21,6 +21,7 @@ import { LoadingButton } from '@mui/lab';
 import plans from '../helpers/plans';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Scrollbar from './Scrollbar';
 
 export default function InvestmentTable({ rows }) {
   const headCells = [
@@ -73,55 +74,61 @@ export default function InvestmentTable({ rows }) {
   // ];
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            {headCells.map((header) => (
-              <TableCell key={header}>{header}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {!!rows.length &&
-            rows.map((row) => (
-              <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell align="left">{row._id}</TableCell>
-                <TableCell align="left">{fDate(row.createdAt)}</TableCell>
-                <TableCell align="left">{row.currency}</TableCell>
-                <TableCell align="left">{row.transactionId}</TableCell>
-                <TableCell align="left">{row.capital}</TableCell>
-                <TableCell align="left">{row.userId.email}</TableCell>
+    <Scrollbar>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              {headCells.map((header) => (
+                <TableCell key={header}>{header}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {!!rows.length &&
+              rows.map((row) => (
+                <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell align="left">{row._id}</TableCell>
+                  <TableCell align="left">{fDate(row.createdAt)}</TableCell>
+                  <TableCell align="left">{row.currency}</TableCell>
+                  <TableCell align="left">{row.transactionId}</TableCell>
+                  <TableCell align="left">{row.capital}</TableCell>
+                  <TableCell align="left">{row.userId.email}</TableCell>
 
-                <TableCell align="left">{fCurrency((plans[row.planId].interest / 100) * row.capital)}</TableCell>
-                <TableCell align="left">{row.dayCount}</TableCell>
-                <TableCell align="left">
-                  <Label
-                    variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-                    color={(row.status === 'pending' && 'warning') || (row.status === 'ended' && 'error') || 'success'}
-                  >
-                    {sentenceCase(row.status)}
-                  </Label>
-                </TableCell>
-                <TableCell align="center">
-                  {row.status === 'pending' ? (
-                    <LoadingButton
-                      onClick={() => handleActive(row)}
-                      loading={loading}
-                      variant="contained"
-                      color="success"
+                  <TableCell align="left">
+                    {plans[row.planId] ? fCurrency((plans[row.planId].interest / 100) * row.capital) : 'No plan yet'}
+                  </TableCell>
+                  <TableCell align="left">{row.daysCount}</TableCell>
+                  <TableCell align="left">
+                    <Label
+                      variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
+                      color={
+                        (row.status === 'pending' && 'warning') || (row.status === 'ended' && 'error') || 'success'
+                      }
                     >
-                      Approve investment
-                    </LoadingButton>
-                  ) : (
-                    <AddActive investment={row} />
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                      {sentenceCase(row.status)}
+                    </Label>
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.status === 'pending' ? (
+                      <LoadingButton
+                        onClick={() => handleActive(row)}
+                        loading={loading}
+                        variant="contained"
+                        color="success"
+                      >
+                        Approve investment
+                      </LoadingButton>
+                    ) : (
+                      <AddActive investment={row} />
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Scrollbar>
   );
 }
 

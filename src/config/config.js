@@ -10,7 +10,9 @@ const config = {
   password: process.env.PASSWORD,
   saltRounds: process.env.SALTROUNDS || 12,
   smtpPort: process.env.SMTP_PORT || 587,
-  mailServer: process.env.MAIL_SERVER || 'smtp.eu.mailgun.org',
+  apiKey: process.env.API_KEY,
+  domain: process.env.DOMAIN,
+  mailServer: process.env.MAIL_SERVER || 'smtp.mailgun.org',
   storageBucket: process.env.BUCKET_URL,
 };
 

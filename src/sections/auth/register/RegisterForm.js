@@ -79,7 +79,7 @@ export default function RegisterForm() {
         })
         .catch(function (err) {
           if (err.response) {
-            toast.error('error updating user pls login again');
+            toast.error('error creating user pls login again');
           } else {
             toast.error(err.message);
           }

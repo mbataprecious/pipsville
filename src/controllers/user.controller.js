@@ -41,7 +41,7 @@ export const createUser = async (req, res) => {
     let hostname = req.headers.host;
     let verificationLink = `http://${hostname}/verify/${token}`;
     let msg = emailTemplate(userData.firstname, verificationLink);
-    const sent = await sendMail(msg, 'Proctorme verification mail', userData.email);
+    const sent = await sendMail(msg, 'Pipsville verification mail', userData.email);
     if (sent) {
       return res.status(200).json({
         type: 'success',

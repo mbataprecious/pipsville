@@ -127,7 +127,7 @@ function WithDrawCard({ user, url }) {
                 disabled={error}
                 onClick={makeWithdrawal}
               >
-                Update Wallet
+                initiate withdrawal
               </LoadingButton>
             </Stack>
           </Grid>

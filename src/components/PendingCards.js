@@ -202,7 +202,7 @@ function PendingCards({
               <CopyClipboard value={'bc1ql3wk2w0ll404ar9lwwvmxxmt42cfdw73zqv3f9'} size="small" disabled />
             )}
             {currency === 'usdt' && (
-              <CopyClipboard value={'TNAXvs5KUB3UALYqQf1tmiHNVRfc3Xqy9A'} size="small" disabled />
+              <CopyClipboard value={'TUhDLibdVcKGTdHcLJu9boUovGbMR17KBk'} size="small" disabled />
             )}
             <TextField
               fullWidth

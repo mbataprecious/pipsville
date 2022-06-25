@@ -23,7 +23,7 @@ const sidebarConfig = [
   // ----------------------------------------------------------------------
   {
     items: [
-      { title: 'userList', path: '/admin101/', icon: ICONS.user },
+      { title: 'userList', path: '/admin101/home', icon: ICONS.user },
       { title: 'Investments', path: '/admin101/invest', icon: ICONS.analytics },
       { title: 'Withdrawal', path: '/admin101/withdrawal', icon: ICONS.withdrawal },
     ],
