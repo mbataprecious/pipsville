@@ -38,21 +38,21 @@ export const subHead = [
 ];
 export const weDo = [
   {
-    title: 'Market Strategy',
+    title: 'Advanced Market Strategy',
     details:
-      'We deliver a broad array of asset financing skills and provide support for our Client’s needs whether they are looking for asset structured financing or asset backed finance.',
+      'We have a world-class forex trading team that allows investors to profit without having to trade, with a guarantee of consistent profits. We also provide support for our Client’s needs whether they are looking for asset structured or asset backed finance.',
     img: '/img/icon1.png',
   },
   {
-    title: 'housing and RealEstate',
+    title: 'Housing and RealEstate',
     details:
-      'In an increasingly complex world, we help intricate systems function, adapt and evolve so they can benefit and grow wealth',
+      'We are committed to providing clients with access to income-generating property investment opportunities that provide a consistent and stable income stream. incorporating risk into profitable investment strategies.',
     img: '/img/housing.png',
   },
   {
-    title: 'Cypto Mining and minting',
+    title: 'Crypto Mining and minting',
     details:
-      'Pipsville is an international Crypto Mining and investment company officially registered in the United Kingdom. Put your first step in a new world of crypto currency mining',
+      'Pipsville is an international Crypto Mining and investment company officially registered in the United Kingdom. Put your first step in a new world of crypto currency mining. We provide a fixed-rate crypto exchange where people can buy, sell, and spend Bitcoins online.',
     img: '/img/coinstg.png',
   },
 ];
@@ -85,13 +85,13 @@ export const crypto = [
   {
     title: 'housing and RealEstate',
     details:
-      'In an increasingly complex world, we help intricate systems function, adapt and evolve so they can benefit and grow wealth',
+      'In an increasingly complex world, we help intricate systems function, adapt and evolve so they can benefit and grow wealth.',
     color: '8C64D2',
   },
   {
     title: 'Forex Trading and Mgt.',
     details:
-      'Pipsville is an international Crypto Mining and investment company officially registered in the United Kingdom. Put your first step in a new world of crypto currency mining',
+      'Pipsville is an international Crypto Mining and investment company officially registered in the United Kingdom. Put your first step in a new world of crypto currency mining.',
     color: 'EA5455',
   },
 ];
@@ -116,6 +116,22 @@ export const testimonies = [
   },
   {
     id: 3,
+    name: 'dave montez',
+    title: 'Thanks pipsville',
+    testimony: 'i thought this was not real at first, but now this is the best platform to be in.',
+    position: 'student',
+    img: '/img/face4.png',
+  },
+  {
+    id: 4,
+    name: 'kelvine',
+    title: 'Amazing support',
+    testimony: 'very helpful support team. Alway ready answer to all your needs. Pipsville support is the best',
+    position: 'financial analyst',
+    img: '/img/face5.png',
+  },
+  {
+    id: 5,
     name: 'luis ralp',
     title: 'Nice Bonus packages',
     testimony: 'the referal and investment bonus are real! wow..so cool.',
@@ -126,7 +142,7 @@ export const testimonies = [
 
 export const FAQs = [
   {
-    title: 'what is Pipsville All About',
+    title: 'What is Pipsville All About',
     answer:
       'Pipsville strives to build wealth and financial security for its consumers by using the three fastest expanding financial sectors: bitcoin, real estate, and forex. Our specialists and industry experts work around the clock to generate wealth for us. We have surpassed our goals and want to help 200 billion more individuals become financially independent.',
   },
@@ -144,5 +160,15 @@ export const FAQs = [
     title: 'When to sell a cryptocurrency?',
     answer:
       'Before Steem I was all in an another altcoin and really excited about it. When I first bought the price was low and made payments to me every week just for holding it. As I tried to participate in the community over the next several months, I was consistently met with a mix of excitement and hostility. When I began talking openly about this, the negative emotions won over in the community and in me. Originally I had invested and been happy to hold no matter what the price which quickly went up after I bought it.',
+  },
+  {
+    title: 'Our Investment plan',
+    answer:
+      'We offer a variety of plans to suit investors with varying income levels. Check out our investment section for a variety of plans and bonuses.',
+  },
+  {
+    title: 'Investment Cycle and Affiliate plan',
+    answer:
+      'Once approved, an investment lasts for 30 days, with daily interest added. We provide an affiliate program as well as bonuses on investments made by people you referred to our platform.',
   },
 ];

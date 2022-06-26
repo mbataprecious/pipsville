@@ -77,7 +77,6 @@ export const attachInvestment = async (req, res, next) => {
     return response(res, 500, 'server error', err.message);
   }
 };
-
 //admin route, admin middleware will be involved
 export const approveInvestment = async (req, res) => {
   const investmentId = req.investment._id;

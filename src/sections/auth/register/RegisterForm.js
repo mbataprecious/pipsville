@@ -83,7 +83,7 @@ export default function RegisterForm() {
         .catch(function (err) {
           setIsSubmitting(false);
           if (err.response) {
-            toast.error('error creating user pls login again');
+            toast.error(err.response.data.message);
           } else {
             toast.error(err.message);
           }

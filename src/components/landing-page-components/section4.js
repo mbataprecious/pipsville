@@ -11,13 +11,16 @@ function section4() {
           <h5 className="">Financial Freedom without Boundaries</h5>
           <hr className="bg-primary h-1 my-4 w-[82px] " />
           <p className="text-[#4F4F4F]">
+            Pipsville strives to build wealth and financial security for its consumers by using the three fastest
+            expanding financial sectors: bitcoin, real estate, and forex. Our specialists and industry experts work
+            around the clock to generate wealth for us. We have surpassed our goals and want to help 200 billion more
+            individuals become financially independent.
+            <br />
             Pipsville has an unrivalled national portfolio of developments that include off-plan and new-build
-            buy-to-let investment opportunities in the best-performing locations for returns. As the UK’s leading
+            buy-to-let investment opportunities in the best-performing locations for returns. As the one of the leading
             property consultancy, our extensive track record and our exclusive partnerships allow us to present our
             clients with high-performing UK property investments that traditionally would only be available to
-            institutional investors and funds. Before we launch a new development, we undertake extensive due diligence
-            to ensure our clients can invest with utmost confidence. We balance a regional focus with a national
-            outlook, working with investors to meet their individual needs.
+            institutional investors and funds.
           </p>
         </div>
         <div className="flex-1 pt-4">

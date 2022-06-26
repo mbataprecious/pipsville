@@ -18,9 +18,9 @@ function Section2() {
             <div className="flex-1 px-10 pt-18 md:pt-10 md:pr-0 md:pl-44 flex flex-col text-center md:text-left">
               <h5 className="text-black mb-3">For a secure and planned future</h5>
               <p className="text-[#4F4F4F] mb-2">
-                With our three tier tested strategy for generating revenue,we can boast of high and stable profit!
-                Principal returned at the end of investment period! Withdrawals are made with at any time easy within
-                12hrs after request! Minimum!
+                We can claim of high and stable profit thanks to our three tier, tried-and-true income generation
+                method! After the investment time, the principal was refunded! Withdrawals are simple and quick to make
+                at any moment within 12 hours of request! Minimum!
               </p>
               <div>
                 <BoxButton

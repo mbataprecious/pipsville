@@ -38,7 +38,7 @@ export default function LoginForm() {
           // console.log(err.response?.data.message);
 
           if (err.response) {
-            toast.error('error, pls try again');
+            toast.error(err.response.data.message);
           } else {
             toast.error(err.message);
           }
