@@ -1,4 +1,5 @@
 import { Container, Grid } from '@mui/material';
+import { useState } from 'react';
 // layouts
 import Layout from '../../layouts';
 // hooks
@@ -18,6 +19,8 @@ import Withdrawal from '../../models/withdrawal.model';
 import Transaction from '../../models/transaction.model';
 import { getUserById } from '../../helpers/fetchers';
 import useSWR from 'swr';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +47,7 @@ async function handler({ req }) {
   const withdrawalList = serializeFields(await Withdrawal.find({ userId: user._id }).lean());
   console.log(totalEarnings, allApprovedInvestment, withdrawalList);
   // withdrawalList.map(list=>())
+
   return {
     props: {
       user,
@@ -69,7 +73,24 @@ export const getServerSideProps = pageAuth(handler);
 export default function Home({ totalInvestment, user, totalWithdrawal, totalEarnings, withdrawalList }) {
   const theme = useTheme();
   const { themeStretch } = useSettings();
-
+  const [loading, setLoading] = useState();
+  const handleRedeemBonus = (bonus) => {
+    setLoading(true);
+    axios
+      .post(`/api/user/${user._id}`, { bonus })
+      .then(function (res) {
+        setLoading(false);
+        toast.success(res.data.message);
+      })
+      .catch(function (err) {
+        setLoading(false);
+        if (err.response) {
+          toast.error('error redeeming bonus');
+        } else {
+          toast.error(err.message);
+        }
+      });
+  };
   const url = `/api/user/${user._id}`;
   const { data } = useSWR(url, getUserById);
   const profile = data ? data : user;
@@ -87,6 +108,8 @@ export default function Home({ totalInvestment, user, totalWithdrawal, totalEarn
               user={profile}
               isWalletEmpty={!(user?.wallets?.btc || user?.wallets?.usdt)}
               isVerified={user.isVerified}
+              loading={loading}
+              handleBonus={handleRedeemBonus}
             />
           </Grid>
 

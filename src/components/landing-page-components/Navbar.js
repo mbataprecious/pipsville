@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { m } from 'framer-motion';
 import { linkArray } from './landingUtils';
 import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
 const variant = {
   hidden: {
@@ -15,7 +16,11 @@ const variant = {
     overflow: 'hidden',
   },
 };
-export default function Navbar() {
+
+Navbar.propTypes = {
+  handleScroll: PropTypes.func,
+};
+export default function Navbar({ handleScroll }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [isScroll, setIsScroll] = React.useState(false);
   const router = useRouter();
@@ -91,8 +96,11 @@ export default function Navbar() {
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto items-center w-full md:justify-end">
               {linkArray.map(({ title, url }) => (
                 <li className="nav-item" key={title}>
-                  <Link href={url}>
-                    <a className="px-3 py-2 flex items-center text-xs leading-snug text-white hover:opacity-75">
+                  {url.includes('#') ? (
+                    <a
+                      onClick={handleScroll}
+                      className="px-3 py-2 flex items-center text-xs leading-snug text-white hover:opacity-75"
+                    >
                       {/* <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i> */}
                       <span
                         className={`ml-2 text-[1.125rem] hover:text-blue-400 ${
@@ -102,7 +110,20 @@ export default function Navbar() {
                         {title}
                       </span>
                     </a>
-                  </Link>
+                  ) : (
+                    <Link href={url}>
+                      <a className="px-3 py-2 flex items-center text-xs leading-snug text-white hover:opacity-75">
+                        {/* <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i> */}
+                        <span
+                          className={`ml-2 text-[1.125rem] hover:text-blue-400 ${
+                            router.pathname === url ? 'text-primary' : ''
+                          }`}
+                        >
+                          {title}
+                        </span>
+                      </a>
+                    </Link>
+                  )}
                 </li>
               ))}
 

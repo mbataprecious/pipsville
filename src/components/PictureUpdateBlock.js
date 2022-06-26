@@ -73,7 +73,7 @@ function PictureUpdateBlock({ user, url }) {
       };
 
       axios
-        .post(`/api/user/${user._id}/photo`, photoData, config)
+        .post(`https://pipsville.herokuapp.com/user/photo/${user._id}`, photoData, config)
         .then((res) => {
           mutate(url);
           res.data.data;

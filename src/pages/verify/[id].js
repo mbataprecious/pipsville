@@ -114,12 +114,13 @@ export default function Verify({ userId }) {
 
   //handle
   const handleSubmit = () => {
+    setLoading(true);
     let photoData = new FormData();
     photoData.append('photo', acceptedFiles[0]);
     photoData.append('purpose', 'verify');
 
     axios
-      .post(`/api/user/verify/${userId}`, photoData, config)
+      .post(`https://pipsville.herokuapp.com/user/verify/${userId}`, photoData, config)
       .then(() => {
         setLoading(false);
 

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Typography, Card, Box, CardContent } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import numeral from 'numeral';
+import { toast } from 'react-toastify';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(() => ({
@@ -20,11 +20,11 @@ StatusCard.propTypes = {
   isWalletEmpty: PropTypes.bool,
   isVerified: PropTypes.bool,
   user: PropTypes.object,
+  loading: PropTypes.bool,
+  handleBonus: PropTypes.func,
 };
 
-export default function StatusCard({ isWalletEmpty, isVerified, user }) {
-  const [loading, setLoading] = useState(false);
-  const handleUpdate = () => {};
+export default function StatusCard({ isWalletEmpty, isVerified, user, handleBonus, loading }) {
   return (
     <RootStyle>
       <CardContent
@@ -92,7 +92,7 @@ export default function StatusCard({ isWalletEmpty, isVerified, user }) {
             justifySelf: 'end',
           }}
           variant="contained"
-          onClick={handleUpdate}
+          onClick={() => (user.bonus ? handleBonus(user.bonus) : toast.warning('no available bonus'))}
         >
           Withdraw bonus
         </LoadingButton>

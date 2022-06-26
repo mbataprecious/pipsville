@@ -47,6 +47,7 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [currentCountry, setCurrentCountry] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
@@ -71,19 +72,23 @@ export default function RegisterForm() {
       confirmPassword: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values) =>
+    onSubmit: (values) => {
+      setIsSubmitting(true);
       axios
         .post('/api/user', values)
         .then(function () {
+          setIsSubmitting(false);
           router.push('/unauthorized');
         })
         .catch(function (err) {
+          setIsSubmitting(false);
           if (err.response) {
             toast.error('error creating user pls login again');
           } else {
             toast.error(err.message);
           }
-        }),
+        });
+    },
   });
 
   const handleCountryChange = () => {};
@@ -91,7 +96,7 @@ export default function RegisterForm() {
     setCurrentCountry(CountryRegionData[index]);
   };
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -181,7 +186,7 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               autoComplete="current-password"
-              type={showPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? 'text' : 'password'}
               label="Confirm Password"
               {...getFieldProps('confirmPassword')}
               InputProps={{

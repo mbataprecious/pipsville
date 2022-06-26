@@ -10,7 +10,7 @@ import { subHead } from './landingUtils';
 
 export default function HeaderSection() {
   const router = useRouter();
-
+  const handleScroll = () => {};
   // useEffect(() => {
   //   if (router.pathname == '/') {
   //     router.push('/dashboard/one');
@@ -22,7 +22,7 @@ export default function HeaderSection() {
       <header className="shadow-none md:shadow-xl">
         <div className="relative pb-20">
           <Image src={bgImage} alt="background" layout="fill" objectFit="cover" priority />
-          <Navbar />
+          <Navbar handleScroll={handleScroll} />
           <div className="relative lg:container px-4 flex justify-center mx-auto">
             <div className="flex flex-col md:flex-row mt-[12rem] w-full">
               <div className="flex-1 px-3 md:px-0 lg:max-w-[32.5rem]">
@@ -30,7 +30,7 @@ export default function HeaderSection() {
                   Thinking and Planing for the future
                 </h1>
                 <p className="font-display mb-4 text-[1.125rem] sm:pt-3 pr-10 leading-[1.125rem] text-white font-medium">
-                  Join to us and invest in the Crypto, Forex and Real estate markets with our range of investment plans.
+                  Join us and invest in the Crypto, Forex and Real estate markets with our range of investment plans.
                   Earn mouth watering bonuses!
                 </p>
                 <div>
@@ -60,7 +60,6 @@ export default function HeaderSection() {
                     />
                   </svg>
                 </button> */}
-                <p className="uppercase font-display font-medium text-white tracking-[0.125rem]">play video</p>
               </div>
             </div>
           </div>
