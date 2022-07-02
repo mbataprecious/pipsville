@@ -129,7 +129,7 @@ export const dailyRio = async (req, res) => {
             investmentId,
             amount: Number(daily),
             type: 'daily',
-            currentBalance: Number(currentBalance + daily),
+            currentBalance: Number(currentBalance) + Number(daily),
           },
         ],
         { session, new: true }

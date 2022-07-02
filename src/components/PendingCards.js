@@ -74,7 +74,7 @@ function PendingCards({
     setIsSubmitting(true);
     axios
       .post(`/api/user/${user._id}/invest/${_id}`, { transactionId })
-      .then((res) => {
+      .then(() => {
         router.push('/dashboard/invest/all');
         setIsSubmitting(false);
       })

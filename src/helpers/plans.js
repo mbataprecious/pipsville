@@ -8,7 +8,7 @@ const plans = [
   },
   {
     id: 1,
-    name: 'sliver',
+    name: 'silver',
     interest: 1.5,
     minimum: 1000,
     maximum: 11999,
