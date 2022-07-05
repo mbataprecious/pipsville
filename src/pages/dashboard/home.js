@@ -77,7 +77,7 @@ export default function Home({ totalInvestment, user, totalWithdrawal, totalEarn
   const handleRedeemBonus = (bonus) => {
     setLoading(true);
     axios
-      .post(`/api/user/${user._id}`, { bonus })
+      .post(`/api/user/${user._id}/bonus`, { bonus })
       .then(function (res) {
         setLoading(false);
         toast.success(res.data.message);

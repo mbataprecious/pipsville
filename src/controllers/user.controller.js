@@ -160,8 +160,13 @@ export const verify = async (req, res) => {
 
 export const redemBonus = async (req, res) => {
   const userId = req.profile._id;
+  console.log(userId);
   const bonus = req.body.bonus;
   const currentBalance = req.profile.accountBalance;
+  const currentBonus = req.profile.bonus;
+  if (bonus !== currentBonus) {
+    return response(res, 404, 'bonus not present');
+  }
 
   try {
     //save user
@@ -180,7 +185,8 @@ export const redemBonus = async (req, res) => {
       );
       await User.findByIdAndUpdate(
         userId,
-        { $inc: { accountBalance: Number(bonus) } },
+        { $inc: { accountBalance: Number(bonus), bonus: -Number(bonus) } },
+
         {
           session,
           new: true,
@@ -210,7 +216,7 @@ export const addBonus = async (req, res) => {
       }
     );
 
-    return response(res, 200, 'bonus redemed successfull', null);
+    return response(res, 200, 'bonus added successfull', null);
   } catch (err) {
     return response(res, 500, 'server error', err.message);
   }
