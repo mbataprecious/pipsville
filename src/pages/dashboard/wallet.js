@@ -78,7 +78,8 @@ export default function Wallet({ user }) {
   };
 
   const updateWallet = () => {
-    if (addresses.btc.trim() === '' || addresses.usdt.trim() === '') {
+    if (addresses.btc.trim() === '' && addresses.usdt.trim() === '') {
+      toast.info('both wallets cannot be empty');
       return;
     }
     setLoading(true);
