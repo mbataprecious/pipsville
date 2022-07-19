@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import config from '../config/config';
-const mailgun = require('mailgun-js');
+// const mailgun = require('mailgun-js');
 
 console.log('this are the details ', config.password, config.email);
 let transporter = nodemailer.createTransport({
