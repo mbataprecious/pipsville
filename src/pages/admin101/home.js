@@ -2,7 +2,7 @@ import { Container } from '@mui/material';
 // layouts
 import Layout from '../../adminLayout/admin/adminLayout';
 // hooks
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import serializeFields from '../../helpers/serialize';
 import useSettings from '../../hooks/useSettings';
 // components
