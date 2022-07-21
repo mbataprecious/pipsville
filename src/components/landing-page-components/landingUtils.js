@@ -66,12 +66,23 @@ export const representative = [
     img: '/img/person box4.png',
   },
   {
-    name: 'Yuxuan Josh',
-    img: '/img/person box2.png',
-  },
-  {
     name: 'John Benedict',
     img: '/img/person box1.png',
+  },
+  {
+    name: 'Paul Maverick',
+    img: '/img/paul.png',
+  },
+];
+
+export let smallReps = [
+  {
+    name: 'Prince chawla',
+    img: '/img/chawla.jpg',
+  },
+  {
+    name: 'Rose Sanders',
+    img: '/img/rose.png',
   },
 ];
 

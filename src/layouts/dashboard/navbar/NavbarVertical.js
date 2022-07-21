@@ -40,7 +40,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 NavbarVertical.propTypes = {
   isOpenSidebar: PropTypes.bool,
   onCloseSidebar: PropTypes.func,
-  user: PropTypes.array,
+  user: PropTypes.object,
 };
 
 export default function NavbarVertical({ isOpenSidebar, onCloseSidebar, user }) {

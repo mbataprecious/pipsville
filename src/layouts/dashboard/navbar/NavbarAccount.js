@@ -22,7 +22,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 NavbarAccount.propTypes = {
   isCollapse: PropTypes.bool,
-  user: PropTypes.array,
+  user: PropTypes.object,
 };
 
 export default function NavbarAccount({ isCollapse, user }) {

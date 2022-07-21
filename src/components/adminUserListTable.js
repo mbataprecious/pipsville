@@ -122,7 +122,6 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
@@ -252,7 +251,7 @@ const style = {
 };
 
 AddBonus.propTypes = {
-  user: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
 };
 function AddBonus({ user }) {
   const { _id } = user;

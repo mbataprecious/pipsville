@@ -1,5 +1,5 @@
 import React from 'react';
-import { representative } from './landingUtils';
+import { representative, smallReps } from './landingUtils';
 
 function Section8() {
   return (
@@ -19,6 +19,23 @@ function Section8() {
             className=" md:w-[49.5%] mb-2 flex w-full flex-col justify-center items-end h-[25.25rem]"
           >
             <div className="border-l-[.5rem] w-[70%] border-primary bg-white translate-y-[3rem] p-4">
+              <h6 className="text-[#0F2851] mb-2">{x.name}</h6>
+              <p className=" text-[#828282] mb-2">Representative </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-wrap justify-center md:justify-around">
+        {smallReps.map((x) => (
+          <div
+            key={x.name}
+            style={{
+              background: `url("${x.img}") 
+        no-repeat center center/cover`,
+            }}
+            className=" md:w-[49.5%] mb-2 flex w-full flex-col justify-center items-end h-[25.25rem]"
+          >
+            <div className="border-l-[.5rem] w-[40%] border-primary bg-white translate-y-[2.5rem] p-4">
               <h6 className="text-[#0F2851] mb-2">{x.name}</h6>
               <p className=" text-[#828282] mb-2">Representative </p>
             </div>
