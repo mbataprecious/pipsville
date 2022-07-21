@@ -20,7 +20,7 @@ Home.getLayout = function getLayout(page) {
 };
 
 // ----------------------------------------------------------------------
-export const getServerSideProps = async ({ req }) => {
+export const getServerSideProps = async () => {
   await dbConnect();
   const userList = serializeFields(await User.find({}).lean(true));
 
