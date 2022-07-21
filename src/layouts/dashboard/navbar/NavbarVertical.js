@@ -53,7 +53,9 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar, user }) 
       .then(() => {
         console.log('logged out.');
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const { pathname } = useRouter();
