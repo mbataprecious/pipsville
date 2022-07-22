@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
-import { fDate } from '../utils/formatTime';
+import { daysFromNow, fDate } from '../utils/formatTime';
 import { fCurrency } from '../utils/formatNumber';
 import Label from './Label';
 import { sentenceCase } from 'change-case';
@@ -185,21 +185,41 @@ export default function EnhancedTable({ rows }) {
                     <TableCell align="left">{plans[row.planId].name}</TableCell>
                     <TableCell align="left">{row.currency}</TableCell>
                     <TableCell align="left">{row.transactionId}</TableCell>
-                    <TableCell align="left">{fCurrency(row.capital)}</TableCell>
-                    <TableCell align="left">{row.approvedDate ? fDate(row.approvedDate) : 'Not Approved'}</TableCell>
-                    <TableCell align="left">
-                      {' '}
-                      {row.withDrawalDate ? fDate(row.withDrawalDate) : 'Not Approved'}
+                    <TableCell align="right">{fCurrency(row.capital)}</TableCell>
+                    <TableCell
+                      align="left"
+                      sx={daysFromNow(row.updatedAt) >= 1 && row.status === 'pending' ? { color: 'error.main' } : {}}
+                    >
+                      {row.approvedDate
+                        ? fDate(row.approvedDate)
+                        : daysFromNow(row.updatedAt) >= 1
+                        ? 'failed'
+                        : 'Not Approved'}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={daysFromNow(row.updatedAt) >= 1 && row.status === 'pending' ? { color: 'error.main' } : {}}
+                    >
+                      {row.withDrawalDate
+                        ? fDate(row.withDrawalDate)
+                        : daysFromNow(row.updatedAt) >= 1
+                        ? 'failed'
+                        : 'Not Approved'}
                     </TableCell>
                     <TableCell align="left">
                       {' '}
                       <Label
                         variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                         color={
-                          (row.status === 'pending' && 'warning') || (row.status === 'ended' && 'error') || 'success'
+                          (row.status === 'pending' && daysFromNow(row.updatedAt) >= 1 && 'error') ||
+                          (row.status === 'pending' && 'warning') ||
+                          (row.status === 'ended' && 'default') ||
+                          'success'
                         }
                       >
-                        {sentenceCase(row.status)}
+                        {daysFromNow(row.updatedAt) >= 1 && row.status === 'pending'
+                          ? 'failed'
+                          : sentenceCase(row.status)}
                       </Label>
                     </TableCell>
                   </TableRow>

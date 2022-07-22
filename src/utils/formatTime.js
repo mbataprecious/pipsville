@@ -23,3 +23,10 @@ export function fToNow(date) {
     addSuffix: true,
   });
 }
+
+export const daysFromNow = (dateString) => {
+  let today = new Date();
+  let date_to_reply = new Date(dateString);
+  let timeinmilisec = date_to_reply.getTime() - today.getTime();
+  return Math.abs(Math.ceil(timeinmilisec / (1000 * 60 * 60 * 24)));
+};
