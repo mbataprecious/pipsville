@@ -1,0 +1,63 @@
+import PropTypes from 'prop-types';
+// @mui
+import { styled } from '@mui/material/styles';
+import { Typography, Button, Card, CardContent } from '@mui/material';
+import { SeoIllustration } from '../../../assets';
+import { useRouter } from 'next/router';
+
+// ----------------------------------------------------------------------
+
+const RootStyle = styled(Card)(({ theme }) => ({
+  boxShadow: 'none',
+  textAlign: 'center',
+  backgroundColor: theme.palette.primary.lighter,
+  [theme.breakpoints.up('md')]: {
+    height: '100%',
+    display: 'flex',
+    textAlign: 'left',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+}));
+
+// ----------------------------------------------------------------------
+
+AppWelcome.propTypes = {
+  displayName: PropTypes.string,
+};
+
+export default function AppWelcome({ displayName }) {
+  const router = useRouter();
+  return (
+    <RootStyle>
+      <CardContent
+        sx={{
+          p: { md: 0 },
+          pl: { md: 5 },
+          color: 'grey.800',
+        }}
+      >
+        <Typography gutterBottom variant="h4">
+          Welcome ,
+          <br /> {!displayName ? '...' : displayName}!
+        </Typography>
+
+        <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
+          {`Grow your funds using Pipsville platform, invest now qualify for our approval bonus`}
+        </Typography>
+
+        <Button variant="contained" onClick={() => router.push('/dashboard/invest/plans')}>
+          Invest Now
+        </Button>
+      </CardContent>
+
+      <SeoIllustration
+        sx={{
+          p: 3,
+          width: 360,
+          margin: { xs: 'auto', md: 'inherit' },
+        }}
+      />
+    </RootStyle>
+  );
+}

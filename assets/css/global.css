@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo&family=Inter:wght@300;500;600;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  * {
+    @apply font-body;
+  }
+  p {
+    @apply font-body;
+  }
+  h5 {
+    @apply font-display font-semibold text-4xl md:text-5xl;
+  }
+  h6 {
+    @apply font-display font-semibold text-2xl;
+  }
+}
