@@ -1,7 +1,7 @@
-import response from '../apiUtil/reponses';
-import Transaction from '../models/transaction.model';
-import Withdrawal from '../models/withdrawal.model';
-import User from '../models/user.model';
+import response from "../apiUtil/reponses";
+import Transaction from "../models/transaction.model";
+import Withdrawal from "../models/withdrawal.model";
+import User from "../models/user.model";
 /**
 
    { "$inc": { "total": -200 } }
@@ -15,19 +15,28 @@ export const makeWithdrawal = async (req, res) => {
   console.log(req.body);
 
   try {
-    if (parseInt(amount) > currentBalance) {
+    if (parseInt(amount) > parseInt(currentBalance)) {
       return response(
         res,
         400,
-        'cannot withdrawal amount greater than active balance which is ' + currentBalance,
+        "cannot withdrawal amount greater than active balance which is " +
+          parseInt(currentBalance),
         null
       );
     }
     // if (req.profile.email === 'praveenraj.rajan1992@gmail.com' && parseInt(amount) > 150) {
     //   return response(res, 400, 'your balance is too low to make withdrawal', null);
     // }
-    if (req.profile.email === 'kayleemendez097@gmail.com' && parseInt(amount) > 127000) {
-      return response(res, 400, 'cannot make withdrawal amount greater than $127,000', null);
+    if (
+      req.profile.email === "kayleemendez097@gmail.com" &&
+      parseInt(amount) > 127000
+    ) {
+      return response(
+        res,
+        400,
+        "cannot make withdrawal amount greater than $127,000",
+        null
+      );
     }
     //save user
     const session = await req.db.startSession();
@@ -37,16 +46,19 @@ export const makeWithdrawal = async (req, res) => {
           {
             userId,
             amount: -Number(amount),
-            type: 'withdrawal',
+            type: "withdrawal",
             currentBalance: Number(currentBalance - amount),
           },
         ],
         { session, new: true }
       );
-      const withdrawal = await Withdrawal.create([{ amount, currency, userId, transactionId: transaction[0]._id }], {
-        session,
-        new: true,
-      });
+      const withdrawal = await Withdrawal.create(
+        [{ amount, currency, userId, transactionId: transaction[0]._id }],
+        {
+          session,
+          new: true,
+        }
+      );
       await User.findByIdAndUpdate(
         userId,
         { $inc: { accountBalance: -Number(withdrawal[0].amount) } },
@@ -60,9 +72,9 @@ export const makeWithdrawal = async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
-    return response(res, 200, 'withdrawal successfully', null);
+    return response(res, 200, "withdrawal successfully", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -71,15 +83,15 @@ export const approveWithdrawal = async (req, res) => {
   try {
     await Withdrawal.findByIdAndUpdate(
       _id,
-      { status: 'paid', approvedDate: Date.now() },
+      { status: "paid", approvedDate: Date.now() },
       {
         new: true,
         runValidators: true,
       }
     );
-    return response(res, 200, 'approved', null);
+    return response(res, 200, "approved", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -90,6 +102,6 @@ export const getWithdrawalById = async (req, res, next) => {
     req.withdrawal = withdrawal;
     next();
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
