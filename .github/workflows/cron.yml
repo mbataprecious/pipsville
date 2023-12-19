@@ -1,0 +1,11 @@
+name: daily-cron
+on:
+  schedule:
+    - cron: '0 1 * * *'
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call our auto rio API
+        run: |
+          curl 'https://www.pipsville.top/api/automateInvestmentRio'
