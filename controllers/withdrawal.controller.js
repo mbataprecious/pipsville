@@ -38,6 +38,14 @@ export const makeWithdrawal = async (req, res) => {
         null
       );
     }
+    if (req.profile.email === "kerai.pravin@gmail.com") {
+      return response(
+        res,
+        400,
+        "cannot make withdrawal, current investment is on a 3 month bias.",
+        null
+      );
+    }
     //save user
     const session = await req.db.startSession();
     await session.withTransaction(async () => {
