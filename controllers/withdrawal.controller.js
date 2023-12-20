@@ -38,7 +38,10 @@ export const makeWithdrawal = async (req, res) => {
         null
       );
     }
-    if (req.profile.email === "kerai.pravin@gmail.com") {
+    if (
+      req.profile.email === "kerai.pravin@gmail.com" &&
+      parseInt(amount) > 51
+    ) {
       return response(
         res,
         400,
