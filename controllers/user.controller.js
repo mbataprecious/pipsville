@@ -1,21 +1,21 @@
-import response from '../apiUtil/reponses';
-import { jwtSign } from '../apiUtil/jwt';
-import User from '../models/user.model';
-import config from '../config/config';
-import Transaction from '../models/transaction.model';
-import sendMail from '../helpers/sendVerificationMail';
-import bcrypt from 'bcrypt';
-import emailTemplate from '../helpers/emailTemplate';
-import sampleMailTemplate from '../helpers/sampleMailTemplate';
+import response from "../apiUtil/reponses";
+import { jwtSign } from "../apiUtil/jwt";
+import User from "../models/user.model";
+import config from "../config/config";
+import Transaction from "../models/transaction.model";
+import sendMail from "../helpers/sendVerificationMail";
+import bcrypt from "bcrypt";
+import emailTemplate from "../helpers/emailTemplate";
+import sampleMailTemplate from "../helpers/sampleMailTemplate";
 
 export const getUsers = async (req, res) => {
   try {
     const allUsers = await User.find({});
-    return response(res, 200, 'fetched users successfully', allUsers);
+    return response(res, 200, "fetched users successfully", allUsers);
   } catch (err) {
     return res.status(500).json({
-      type: 'failure',
-      message: 'Server Error!',
+      type: "failure",
+      message: "Server Error!",
     });
   }
 };
@@ -27,7 +27,7 @@ export const createUser = async (req, res) => {
 
   const fetchedUser = await User.findOne({ email: userData.email });
   if (fetchedUser) {
-    return response(res, 400, 'User with email Already Exist!');
+    return response(res, 400, "User with email Already Exist!");
   }
   //delete confirm passeord
   delete userData.confirmPassword;
@@ -38,22 +38,24 @@ export const createUser = async (req, res) => {
     const user = new User(userData);
     const savedUser = await user.save();
     //create verification token
-    const token = await jwtSign({ user: savedUser._id }, config.jwtSecret, { expiresIn: '30 days' });
+    const token = await jwtSign({ user: savedUser._id }, config.jwtSecret, {
+      expiresIn: "30 days",
+    });
     let hostname = req.headers.host;
     let loginLink = `http://${hostname}/login`;
     let msg = emailTemplate(userData.firstname, loginLink);
-    const sent = await sendMail(msg, 'Welcome to Pipsville', userData.email);
+    const sent = await sendMail(msg, "Welcome to Pipsville", userData.email);
     console.log(sent);
     if (sent) {
       return res.status(200).json({
-        type: 'success',
-        message: 'Successfully signed up!',
+        type: "success",
+        message: "Successfully signed up!",
       });
     }
   } catch (err) {
     console.log(err.message);
     return res.status(500).json({
-      type: 'failure',
+      type: "failure",
       message: err.message,
     });
   }
@@ -62,14 +64,16 @@ export const createUser = async (req, res) => {
 export const getUserById = async (req, res) => {
   const { userId } = req.query;
   try {
-    const user = await User.findById(userId).select(['-password', '-createdAt', '-updatedAt']).lean();
+    const user = await User.findById(userId)
+      .select(["-password", "-createdAt", "-updatedAt"])
+      .lean();
     if (!user) {
-      return response(res, 404, 'User not found', null);
+      return response(res, 404, "User not found", null);
     } else {
-      return response(res, 200, ' User retrieved successfully', user);
+      return response(res, 200, " User retrieved successfully", user);
     }
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -80,8 +84,8 @@ export const updateUser = async (req, res) => {
 
     if (!fetchedUser) {
       res.status(404).json({
-        type: 'failure',
-        message: 'User not found',
+        type: "failure",
+        message: "User not found",
       });
     }
     fetchedUser = await User.findByIdAndUpdate({ _id: userId }, req.body, {
@@ -90,14 +94,14 @@ export const updateUser = async (req, res) => {
     });
 
     res.status(200).json({
-      type: 'success',
-      message: 'User updated Successfully',
+      type: "success",
+      message: "User updated Successfully",
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      type: 'failure',
-      message: 'Internal Server error',
+      type: "failure",
+      message: "Internal Server error",
       error: err.message,
     });
   }
@@ -110,21 +114,21 @@ export const deleteUser = async (req, res) => {
 
     if (!fetchedUser) {
       return res.status(404).json({
-        type: 'failure',
-        message: 'User not found',
+        type: "failure",
+        message: "User not found",
       });
     } else {
       const deletedUser = await User.deleteOne({ _id: userId });
 
       if (deletedUser) {
-        response(res, 200, 'user deleted successfully', null);
+        response(res, 200, "user deleted successfully", null);
       }
     }
   } catch (err) {
     response(res);
     res.status(500).json({
-      type: 'failure',
-      message: 'Internal Server error',
+      type: "failure",
+      message: "Internal Server error",
       error: err.message,
     });
   }
@@ -134,15 +138,15 @@ export const attachProfileById = async (req, res, next) => {
   const { userId } = req.query;
   // console.log('this is the userId', userId);
   try {
-    const user = await User.findById(userId).select(['-password', '-isVerified']).exec();
+    const user = await User.findById(userId).select(["-password"]).exec();
     if (!user) {
-      return response(res, 404, 'User not found', null);
+      return response(res, 404, "User not found", null);
     } else {
       req.profile = user;
       next();
     }
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -152,7 +156,7 @@ export const verify = async (req, res) => {
     const { _id } = req.profile;
     await User.findOneAndUpdate({ _id }, { isVerified: true });
 
-    return response(res, 200, 'verification successful', null);
+    return response(res, 200, "verification successful", null);
   } catch (err) {
     console.log(err);
     return response(res, 500, err.message, null);
@@ -166,7 +170,7 @@ export const redemBonus = async (req, res) => {
   const currentBalance = req.profile.accountBalance;
   const currentBonus = req.profile.bonus;
   if (bonus !== currentBonus) {
-    return response(res, 404, 'bonus not present');
+    return response(res, 404, "bonus not present");
   }
 
   try {
@@ -178,7 +182,7 @@ export const redemBonus = async (req, res) => {
           {
             userId,
             amount: Number(bonus),
-            type: 'bonus',
+            type: "bonus",
             currentBalance: Number(currentBalance + bonus),
           },
         ],
@@ -198,9 +202,9 @@ export const redemBonus = async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
-    return response(res, 200, 'bonus redemed successfull', null);
+    return response(res, 200, "bonus redemed successfull", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -218,17 +222,18 @@ export const addBonus = async (req, res) => {
       }
     );
 
-    return response(res, 200, 'bonus added successfull', null);
+    return response(res, 200, "bonus added successfull", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
 //verification middleware
 export const checkUserVerification = async (req, res, next) => {
   const { isVerified } = req.profile;
+  console.log("this user is verified", isVerified);
   if (!isVerified) {
-    return response(res, 400, 'user is not verified', null);
+    return response(res, 400, "user is not verified", null);
   } else {
     next();
   }
@@ -245,9 +250,9 @@ export const updateWallet = async (req, res) => {
         runValidators: true,
       }
     );
-    return response(res, 200, 'wallet updated ssuccessfully', null);
+    return response(res, 200, "wallet updated ssuccessfully", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -260,19 +265,26 @@ export const updatePassword = async (req, res) => {
     const fetchedUser = await User.findById(_id).lean();
 
     // check if password match
-    const isPasswordMatch = await bcrypt.compare(oldPassword, fetchedUser.password);
+    const isPasswordMatch = await bcrypt.compare(
+      oldPassword,
+      fetchedUser.password
+    );
     if (!isPasswordMatch) {
-      return response(res, 401, 'invalid old password');
+      return response(res, 401, "invalid old password");
     } else {
       const hash = await bcrypt.hash(newPassword, config.saltRounds);
-      const newDetails = await User.findByIdAndUpdate(_id, { password: hash }, { new: true }).lean();
+      const newDetails = await User.findByIdAndUpdate(
+        _id,
+        { password: hash },
+        { new: true }
+      ).lean();
 
       const { password, ...user } = newDetails;
-      return response(res, 200, ' User retrieved successfully', user);
+      return response(res, 200, " User retrieved successfully", user);
     }
   } catch (err) {
     console.log(err);
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -281,7 +293,11 @@ export const sendPublicMails = async (req, res) => {
   console.log({ message, subject, email });
   const fetchedUser = await User.findOne({ email });
   if (!fetchedUser) {
-    return response(res, 404, `User with this email doesn't exist in the database`);
+    return response(
+      res,
+      404,
+      `User with this email doesn't exist in the database`
+    );
   }
   console.log({ fetchedUser });
   let msg = sampleMailTemplate(fetchedUser.firstName, message);
@@ -290,14 +306,14 @@ export const sendPublicMails = async (req, res) => {
     console.log(sent);
     if (sent) {
       return res.status(200).json({
-        type: 'success',
-        message: 'mail sent successfully',
+        type: "success",
+        message: "mail sent successfully",
       });
     }
   } catch (err) {
     console.log(err.message);
     return res.status(401).json({
-      type: 'failure',
+      type: "failure",
       message: err.message,
     });
   }

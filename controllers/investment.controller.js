@@ -1,30 +1,35 @@
-import response from '../apiUtil/reponses';
-import Investment from '../models/investment.model';
-import Transaction from '../models/transaction.model';
-import User from '../models/user.model';
-import add from 'date-fns/add';
-import plans from '../helpers/plans';
+import response from "../apiUtil/reponses";
+import Investment from "../models/investment.model";
+import Transaction from "../models/transaction.model";
+import User from "../models/user.model";
+import add from "date-fns/add";
+import plans from "../helpers/plans";
 
 export const getInvestments = async (req, res) => {
   const { _id } = req.profile;
   try {
     const allInvestments = await Investment.find({ userId: _id }).exec();
 
-    return response(res, 200, 'success', allInvestments);
+    return response(res, 200, "success", allInvestments);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
 export const invest = async (req, res) => {
-  let invest = new Investment({ userId: req.profile._id, status: 'pending', ...req.body });
+  console.log("api is okay");
+  let invest = new Investment({
+    userId: req.profile._id,
+    status: "pending",
+    ...req.body,
+  });
   try {
     const result = await invest.save();
     if (result) {
-      response(res, 200, 'success', result);
+      response(res, 200, "success", result);
     }
   } catch (err) {
-    return response(res, 500, 'failure', null);
+    return response(res, 500, "failure", null);
   }
 };
 export const updateInvt = async (req, res) => {
@@ -32,11 +37,13 @@ export const updateInvt = async (req, res) => {
     const invtId = req.query.investmentId;
 
     console.log(req.investment);
-    let invest = await Investment.findByIdAndUpdate(invtId, req.body, { new: true });
+    let invest = await Investment.findByIdAndUpdate(invtId, req.body, {
+      new: true,
+    });
 
-    return response(res, 200, 'success', invest);
+    return response(res, 200, "success", invest);
   } catch (err) {
-    return response(res, 500, 'failure', err);
+    return response(res, 500, "failure", err);
   }
 };
 export const deleteInvt = async (req, res) => {
@@ -44,9 +51,9 @@ export const deleteInvt = async (req, res) => {
     const invtId = req.investment._id;
     console.log(req.investment);
     let invest = await Investment.findByIdAndDelete(invtId);
-    return response(res, 200, 'deleted successfully', invest);
+    return response(res, 200, "deleted successfully", invest);
   } catch (err) {
-    return response(res, 500, 'failure', null);
+    return response(res, 500, "failure", null);
   }
 };
 
@@ -55,12 +62,12 @@ export const getInvestmentDetail = async (req, res) => {
   try {
     const investment = await Investment.findById(investmentId).exec();
     if (investment) {
-      return response(res, 200, 'success', investment);
+      return response(res, 200, "success", investment);
     } else {
-      return response(res, 404, 'not found', null);
+      return response(res, 404, "not found", null);
     }
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 export const attachInvestment = async (req, res, next) => {
@@ -72,10 +79,10 @@ export const attachInvestment = async (req, res, next) => {
       req.investment = investment;
       next();
     } else {
-      return response(res, 404, 'not found', null);
+      return response(res, 404, "not found", null);
     }
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 //admin route, admin middleware will be involved
@@ -87,7 +94,11 @@ export const approveInvestment = async (req, res) => {
     await session.withTransaction(async () => {
       const investment = await Investment.findByIdAndUpdate(
         investmentId,
-        { approvedDate: Date.now(), status: 'active', withDrawalDate: add(new Date(), { days: 30 }).toISOString() },
+        {
+          approvedDate: Date.now(),
+          status: "active",
+          withDrawalDate: add(new Date(), { days: 30 }).toISOString(),
+        },
         { session, new: true }
       ).exec();
 
@@ -97,7 +108,7 @@ export const approveInvestment = async (req, res) => {
             amount: investment.capital,
             investmentId,
             currentBalance: req.profile.accountBalance,
-            type: 'investment',
+            type: "investment",
             userId: req.profile._id,
           },
         ],
@@ -107,9 +118,9 @@ export const approveInvestment = async (req, res) => {
 
     await session.commitTransaction();
     session.endSession();
-    return response(res, 200, 'investment approved');
+    return response(res, 200, "investment approved");
   } catch (err) {
-    return response(res, 500, 'failure', null);
+    return response(res, 500, "failure", null);
   }
 };
 
@@ -121,18 +132,25 @@ export const topupInvestment = async (req, res) => {
     await session.withTransaction(async () => {
       const investment = await Investment.findByIdAndUpdate(
         investmentId,
-        { approvedDate: undefined, status: 'pending', withDrawalDate: undefined },
+        {
+          approvedDate: undefined,
+          status: "pending",
+          withDrawalDate: undefined,
+        },
         { session, new: true }
       ).exec();
       console.log(investment);
-      await Transaction.findOneAndDelete({ investmentId, amount }, { session }).exec();
+      await Transaction.findOneAndDelete(
+        { investmentId, amount },
+        { session }
+      ).exec();
     });
 
     await session.commitTransaction();
     session.endSession();
-    return response(res, 200, 'top up successful');
+    return response(res, 200, "top up successful");
   } catch (err) {
-    return response(res, 500, 'failure', null);
+    return response(res, 500, "failure", null);
   }
 };
 
@@ -152,13 +170,17 @@ export const dailyRio = async (req, res) => {
             userId,
             investmentId,
             amount: Number(daily),
-            type: 'daily',
+            type: "daily",
             currentBalance: Number(currentBalance) + Number(daily),
           },
         ],
         { session, new: true }
       );
-      await Investment.findByIdAndUpdate(investmentId, { $inc: { daysCount: 1 } }, { session });
+      await Investment.findByIdAndUpdate(
+        investmentId,
+        { $inc: { daysCount: 1 } },
+        { session }
+      );
       await User.findByIdAndUpdate(
         userId,
         { $inc: { accountBalance: Number(daily) } },
@@ -172,9 +194,9 @@ export const dailyRio = async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
-    return response(res, 200, 'daily rio is added', null);
+    return response(res, 200, "daily rio is added", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
 
@@ -182,46 +204,68 @@ export const dailyAllInvestRioCheck = async (req, res) => {
   try {
     //save user
     const session = await req.db.startSession();
-    let continousInvts = await Investment.find({ daysCount: { $lt: 29 }, status: 'active' }).populate({
-      path: 'userId',
-      select: 'accountBalance _id',
+    let continousInvts = await Investment.find({
+      daysCount: { $lt: 29 },
+      status: "active",
+    }).populate({
+      path: "userId",
+      select: "accountBalance _id",
     });
 
-    let endingInvts = await Investment.find({ daysCount: 29, status: 'active' }).populate({
-      path: 'userId',
-      select: 'accountBalance _id',
+    let endingInvts = await Investment.find({
+      daysCount: 29,
+      status: "active",
+    }).populate({
+      path: "userId",
+      select: "accountBalance _id",
     });
 
     let endingTxns = endingInvts?.map(({ _id, userId, planId, capital }) => ({
       userId: userId._id,
       investmentId: _id,
       amount: Number((plans[planId].interest / 100) * capital),
-      type: 'daily',
-      currentBalance: Number(userId.accountBalance) + Number((plans[planId].interest / 100) * capital),
-    }));
-    let endingInvtsTxns = endingInvts?.map(({ _id, userId, planId, capital }) => ({
-      userId: userId._id,
-      investmentId: _id,
-      amount: -Number(capital),
-      type: 'investment',
+      type: "daily",
       currentBalance:
-        Number(userId.accountBalance) + Number((plans[planId].interest / 100) * capital) + Number(capital),
+        Number(userId.accountBalance) +
+        Number((plans[planId].interest / 100) * capital),
     }));
+    let endingInvtsTxns = endingInvts?.map(
+      ({ _id, userId, planId, capital }) => ({
+        userId: userId._id,
+        investmentId: _id,
+        amount: -Number(capital),
+        type: "investment",
+        currentBalance:
+          Number(userId.accountBalance) +
+          Number((plans[planId].interest / 100) * capital) +
+          Number(capital),
+      })
+    );
 
     let endingUser = endingInvts?.map(({ userId, planId, capital }) => ({
       updateOne: {
         filter: { _id: userId._id },
-        update: { $inc: { accountBalance: Number((plans[planId].interest / 100) * capital) + Number(capital) } },
+        update: {
+          $inc: {
+            accountBalance:
+              Number((plans[planId].interest / 100) * capital) +
+              Number(capital),
+          },
+        },
       },
     }));
 
-    let continousTxns = continousInvts.map(({ _id, userId, planId, capital }) => ({
-      userId: userId._id,
-      investmentId: _id,
-      amount: Number((plans[planId].interest / 100) * capital),
-      type: 'daily',
-      currentBalance: Number(userId.accountBalance) + Number((plans[planId].interest / 100) * capital),
-    }));
+    let continousTxns = continousInvts.map(
+      ({ _id, userId, planId, capital }) => ({
+        userId: userId._id,
+        investmentId: _id,
+        amount: Number((plans[planId].interest / 100) * capital),
+        type: "daily",
+        currentBalance:
+          Number(userId.accountBalance) +
+          Number((plans[planId].interest / 100) * capital),
+      })
+    );
 
     let continousUser = continousTxns.map(({ userId, amount }) => ({
       updateOne: {
@@ -234,24 +278,31 @@ export const dailyAllInvestRioCheck = async (req, res) => {
 
     await session.withTransaction(async () => {
       await Transaction.create(
-        [...continousTxns, ...(endingTxns ? endingTxns : []), ...(endingInvtsTxns ? endingInvtsTxns : [])],
+        [
+          ...continousTxns,
+          ...(endingTxns ? endingTxns : []),
+          ...(endingInvtsTxns ? endingInvtsTxns : []),
+        ],
         { session, new: true }
       );
       await Investment.updateMany(
-        { daysCount: 29, status: 'active' },
-        { $inc: { daysCount: 1 }, status: 'ended' },
+        { daysCount: 29, status: "active" },
+        { $inc: { daysCount: 1 }, status: "ended" },
         { session }
       );
       await Investment.updateMany(
-        { daysCount: { $lt: 29 }, status: 'active' },
+        { daysCount: { $lt: 29 }, status: "active" },
         { $inc: { daysCount: 1 } },
         { session }
       );
 
       //db.listing.updateMany({ "_id": { "$in": ids }}, { "$set": { "Supplier": "S" }});
-      await User.bulkWrite([...continousUser, ...(endingUser ? endingUser : [])], {
-        session,
-      });
+      await User.bulkWrite(
+        [...continousUser, ...(endingUser ? endingUser : [])],
+        {
+          session,
+        }
+      );
     });
     await session.commitTransaction();
     session.endSession();
@@ -265,8 +316,8 @@ export const dailyAllInvestRioCheck = async (req, res) => {
     //   continousUser,
     //   endingInvtsTxns,
     // });
-    return response(res, 200, 'daily investment update successful', null);
+    return response(res, 200, "daily investment update successful", null);
   } catch (err) {
-    return response(res, 500, 'server error', err.message);
+    return response(res, 500, "server error", err.message);
   }
 };
