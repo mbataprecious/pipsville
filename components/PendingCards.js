@@ -1,41 +1,51 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import PropTypes from "prop-types";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Typography, TextField, Card, Box, CardContent, IconButton, Modal, Stack, Button } from '@mui/material';
-import { MdDelete } from 'react-icons/md';
-import { LoadingButton } from '@mui/lab';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import CopyClipboard from './CopyToClipboard';
-import { useRouter } from 'next/router';
+import { styled } from "@mui/material/styles";
+import {
+  Typography,
+  TextField,
+  Card,
+  Box,
+  CardContent,
+  IconButton,
+  Modal,
+  Stack,
+  Button,
+} from "@mui/material";
+import { MdDelete } from "react-icons/md";
+import { LoadingButton } from "@mui/lab";
+import axios from "axios";
+import { toast } from "react-toastify";
+import CopyClipboard from "./CopyToClipboard";
+import { useRouter } from "next/router";
 
 //number and word transforms
-import { capitalCase } from 'change-case';
-import numeral from 'numeral';
+import { capitalCase } from "change-case";
+import numeral from "numeral";
 //vext/Image
-import Image from 'next/image';
+import Image from "next/image";
 
 //barcode images
-import usdtImg from '../assets/img/usdt.jpg';
-import btcImg from '../assets/img/btc.jpg';
+import usdtImg from "../assets/img/usdt.jpg";
+import btcImg from "../assets/img/btc.jpg";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(() => ({
-  height: '100%',
-  width: '100%',
-  textAlign: 'left',
-  alignItems: 'center',
+  height: "100%",
+  width: "100%",
+  textAlign: "left",
+  alignItems: "center",
 }));
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   borderRadius: 2,
   boxShadow: 24,
   p: 3,
@@ -55,9 +65,9 @@ function PendingCards({
   },
   user,
 }) {
-  console.log('pending id', _id);
+  console.log("pending id", _id);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [transactionId, setTransactionId] = useState('');
+  const [transactionId, setTransactionId] = useState("");
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const handleAmtChange = (e) => {
@@ -68,20 +78,20 @@ function PendingCards({
   const handleClose = () => setOpen(false);
   const handleSubmit = () => {
     if (transactionId.length <= 5) {
-      toast.error('invalid transactionId');
+      toast.error("invalid transactionId");
       return;
     }
     setIsSubmitting(true);
     axios
       .post(`/api/user/${user._id}/invest/${_id}`, { transactionId })
       .then(() => {
-        router.push('/dashboard/invest/all');
+        router.push("/dashboard/invest/all");
         setIsSubmitting(false);
       })
       .catch((err) => {
         setIsSubmitting(false);
         if (err.response) {
-          toast.error('error, submitting transaction');
+          toast.error("error, submitting transaction");
         } else {
           toast.error(err.message);
         }
@@ -94,12 +104,12 @@ function PendingCards({
       .then((res) => {
         setIsSubmitting(false);
         handleClose();
-        router.push('/dashboard/invest/plans');
+        router.push("/dashboard/invest/plans");
       })
       .catch((err) => {
         setIsSubmitting(false);
         if (err.response) {
-          toast.error('error, submitting transaction');
+          toast.error("error, submitting transaction");
         } else {
           toast.error(err.message);
         }
@@ -118,7 +128,8 @@ function PendingCards({
             Unpaid investment
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Are you sure you wnt to delete this investment of deposit: {numeral(capital).format('0.00')} USD
+            Are you sure you wnt to delete this investment of deposit:{" "}
+            {numeral(capital).format("0.00")} USD
           </Typography>
           <Stack mt={3} direction="row" spacing={3}>
             <LoadingButton
@@ -131,7 +142,13 @@ function PendingCards({
             >
               Confirm
             </LoadingButton>
-            <Button size="medium" type="submit" variant="contained" color="warning" onClick={handleClose}>
+            <Button
+              size="medium"
+              type="submit"
+              variant="contained"
+              color="warning"
+              onClick={handleClose}
+            >
               Cancel
             </Button>
           </Stack>
@@ -139,12 +156,20 @@ function PendingCards({
       </Modal>
       <CardContent
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <Box mb={1} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box
+          mb={1}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box>
               <img
                 style={{
@@ -156,21 +181,21 @@ function PendingCards({
               />
             </Box>
 
-            {currency === 'btc' && (
-              <Typography paddingLeft={2} align={'center'} variant="subtitle2">
+            {currency === "btc" && (
+              <Typography paddingLeft={2} align={"center"} variant="subtitle2">
                 {` Bitcoin(BTC)${capitalCase(name)} Plan`}
               </Typography>
             )}
-            {currency === 'usdt' && (
-              <Typography paddingLeft={2} align={'center'} variant="subtitle2">
+            {currency === "usdt" && (
+              <Typography paddingLeft={2} align={"center"} variant="subtitle2">
                 {` Tether(USDT)${capitalCase(name)} Plan`}
               </Typography>
             )}
           </Box>
           <Box
             sx={{
-              color: 'error.main',
-              justifySelf: 'end',
+              color: "error.main",
+              justifySelf: "end",
             }}
           >
             <IconButton onClick={handleOpen}>
@@ -184,25 +209,35 @@ function PendingCards({
           </Box>
         </Box>
 
-        <Typography align="center" variant="h5">{`Deposit: ${numeral(capital).format('0.00')} USD`}</Typography>
+        <Typography align="center" variant="h5">{`Deposit: ${numeral(
+          capital
+        ).format("0.00")} USD`}</Typography>
 
-        <Typography align="center" variant="body2" color={'primary'}>
+        <Typography align="center" variant="body2" color={"primary"}>
           Make payment to the Address below
         </Typography>
         <Box>
-          {currency === 'btc' && <Image src={btcImg} alt="barcode" />}
-          {currency === 'usdt' && <Image src={usdtImg} alt="barcode" />}
+          {currency === "btc" && <Image src={btcImg} alt="barcode" />}
+          {currency === "usdt" && <Image src={usdtImg} alt="barcode" />}
         </Box>
         <Box>
           <>
-            <Typography align="center" variant="body2" color={'primary'}>
+            <Typography align="center" variant="body2" color={"primary"}>
               Wallet Address
             </Typography>
-            {currency === 'btc' && (
-              <CopyClipboard value={'bc1qvkqqy9d5xh6asuqrsay8s7st2svcg6q45rstl5'} size="small" disabled />
+            {currency === "btc" && (
+              <CopyClipboard
+                value={"bc1qs8rq3x8k75tyne9ukxwyfjv6zg2nsqmwuh7nhf"}
+                size="small"
+                disabled
+              />
             )}
-            {currency === 'usdt' && (
-              <CopyClipboard value={'TRBPFxHc1jFAdjEjC3ANG2KnZbFy4H6yVR'} size="small" disabled />
+            {currency === "usdt" && (
+              <CopyClipboard
+                value={"TXmaQB2m6hjEorLzYzyPaD1LYiwJb3DAmd"}
+                size="small"
+                disabled
+              />
             )}
             <TextField
               fullWidth
