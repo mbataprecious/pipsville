@@ -1,4 +1,4 @@
-const emailTemplate = (name = '', loginLink) => `<!DOCTYPE html>
+const emailTemplate = (name = "", loginLink) => `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -49,10 +49,10 @@ const emailTemplate = (name = '', loginLink) => `<!DOCTYPE html>
                       Welcome to pipsville, ${name}</h1>
                     <p
                       style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; ">
-                      Thanks for creating an account with Pipsville. To continue, please login and perform the needed verification by submitting a valid I.D</p>
+                      Thanks for creating an account with Pipsville.</p>
                     <p
                       style="margin:0;font-size:16px;line-height:24px;font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; ">
-                      note, this link expires in 30 days. Login to continue.</p>
+                       Login to continue.</p>
                   </td>
                 </tr>
 

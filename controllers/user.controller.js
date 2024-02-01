@@ -34,6 +34,7 @@ export const createUser = async (req, res) => {
   try {
     const hash = await bcrypt.hash(userData.password, config.saltRounds);
     userData.password = hash;
+    user.isVerified = true;
     //save user
     const user = new User(userData);
     const savedUser = await user.save();
