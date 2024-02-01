@@ -34,9 +34,10 @@ export const createUser = async (req, res) => {
   try {
     const hash = await bcrypt.hash(userData.password, config.saltRounds);
     userData.password = hash;
-    user.isVerified = true;
+
     //save user
     const user = new User(userData);
+    user.isVerified = true;
     const savedUser = await user.save();
     //create verification token
     const token = await jwtSign({ user: savedUser._id }, config.jwtSecret, {
